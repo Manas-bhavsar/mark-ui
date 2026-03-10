@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Clash Display', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Oxanium', monospace;
+}
+
+/* ═══════════════════════════════════════════
+   MARK UI — Design Token System
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* ── Base palette (never changes) ── */
+  --mark-bg:          #0A0A0A;
+  --mark-fg:          #FAFAFA;
+  --mark-bg-surface:  #111111;
+  --mark-bg-elevated: #1A1A1A;
+  --mark-border:      rgba(250, 250, 250, 0.08);
+
+  /* ── Motion tokens ── */
+  --mark-duration-fast:   120ms;
+  --mark-duration-normal: 240ms;
+  --mark-duration-slow:   400ms;
+  --mark-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --mark-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --mark-ease-snappy: cubic-bezier(0.25, 0, 0, 1);
+
+  /* ── Spacing scale ── */
+  --mark-space-1:  4px;
+  --mark-space-2:  8px;
+  --mark-space-3:  12px;
+  --mark-space-4:  16px;
+  --mark-space-6:  24px;
+  --mark-space-8:  32px;
+  --mark-space-12: 48px;
+  --mark-space-16: 64px;
+
+  /* ── Border radius scale ── */
+  --mark-radius-sm:   4px;
+  --mark-radius-md:   8px;
+  --mark-radius-lg:   12px;
+  --mark-radius-xl:   16px;
+  --mark-radius-pill: 9999px;
+
+  /* ── Typography ── */
+  --mark-font-display: 'Oxanium', monospace;
+  --mark-font-body: 'Clash Display', sans-serif;
+  --mark-font-code: 'JetBrains Mono', monospace;
+
+  /* ── Default accent (Monochrome) ── */
+  --mark-accent-primary:   #FAFAFA;
+  --mark-accent-secondary: #0A0A0A;
+  --mark-accent-glow:      rgba(250, 250, 250, 0.15);
+}
+
+/* ═══════════════════════════════════════════
+   Theme Overrides
+   ═══════════════════════════════════════════ */
+
+[data-theme="monochrome"] {
+  --mark-accent-primary:   #FAFAFA;
+  --mark-accent-secondary: #0A0A0A;
+  --mark-accent-glow:      rgba(250, 250, 250, 0.15);
+}
+
+[data-theme="cyberpunk"] {
+  --mark-accent-primary:   #FF2D9B;
+  --mark-accent-secondary: #00F5FF;
+  --mark-accent-glow:      rgba(255, 45, 155, 0.25);
+}
+
+/* ═══════════════════════════════════════════
+   Base Styles
+   ═══════════════════════════════════════════ */
+
+html {
+  background-color: var(--mark-bg);
+  color: var(--mark-fg);
+  transition:
+    background-color var(--mark-duration-normal) var(--mark-ease-smooth),
+    color var(--mark-duration-normal) var(--mark-ease-smooth);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--mark-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-family: var(--mark-font-display);
+}
+
+code, pre, kbd, samp {
+  font-family: var(--mark-font-code);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════
+   Reduced Motion
+   ═══════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   Scrollbar (subtle)
+   ═══════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--mark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mark-border);
+  border-radius: var(--mark-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(250, 250, 250, 0.16);
+}
