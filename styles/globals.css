@@ -94,6 +94,10 @@ h1 {
   font-family: var(--mark-font-display);
 }
 
+h2 {
+  font-family: var(--mark-font-body);
+}
+
 code, pre, kbd, samp {
   font-family: var(--mark-font-code);
 }

@@ -152,7 +152,7 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center gap-3">
           <a
-            href="https://github.com"
+            href="https://github.com/Manas-bhavsar/mark-ui"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:flex w-9 h-9 items-center justify-center rounded-lg"
