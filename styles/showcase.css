@@ -1,0 +1,351 @@
+/**
+ * Components Showcase Page Styles
+ * 
+ * All styles use CSS custom properties from the theme system for seamless theme switching.
+ * Requirements: 12.1, 12.2, 12.3, 12.4
+ */
+
+/* CategoryFilter Component */
+
+.category-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.category-filter.active {
+  background: var(--mark-accent-primary);
+  color: var(--mark-bg);
+  font-family: var(--mark-font-display), sans-serif;
+  border: none;
+}
+
+.category-filter.inactive {
+  background: var(--mark-bg-elevated);
+  border: 1px solid var(--mark-border);
+  color: inherit;
+}
+
+.category-filter.inactive:hover {
+  border-color: color-mix(in srgb, var(--mark-accent-primary) 40%, transparent);
+}
+
+.category-filter-label {
+  line-height: 1;
+}
+
+.category-filter-count {
+  opacity: 0.7;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ComponentsShowcaseLayout Component */
+
+.components-showcase-layout {
+  display: flex;
+  gap: 48px;
+  width: 100%;
+}
+
+/* Mobile layout (below 768px) */
+@media (max-width: 767px) {
+  .components-showcase-layout {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* FilterSidebar Component */
+
+.filter-sidebar {
+  width: 220px;
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+}
+
+.filter-sidebar-heading {
+  font-family: var(--mark-font-display), sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.filter-sidebar-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Mobile layout (below 768px) */
+@media (max-width: 767px) {
+  .filter-sidebar {
+    width: 100%;
+    position: static;
+    margin-bottom: 24px;
+  }
+
+  .filter-sidebar-heading {
+    margin-bottom: 12px;
+  }
+
+  .filter-sidebar-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+/* CategoryDivider Component */
+
+.category-divider {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.category-divider-label {
+  font-family: var(--mark-font-display), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mark-text-secondary, color-mix(in srgb, currentColor 60%, transparent));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 12px 0 0;
+  position: relative;
+}
+
+.category-divider-label::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  width: 100vw;
+  height: 1px;
+  background: var(--mark-border);
+  opacity: 0.3;
+}
+/* ComponentGrid Component */
+
+.component-grid {
+  flex: 1;
+  width: 100%;
+}
+
+.component-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.category-section {
+  display: contents;
+}
+
+.component-grid-items {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(3, 1fr); /* Desktop: 3 columns */
+}
+
+/* Tablet layout (768px-1024px) */
+@media (max-width: 1024px) {
+  .component-grid-items {
+    grid-template-columns: repeat(2, 1fr); /* Tablet: 2 columns */
+  }
+}
+
+/* Mobile layout (below 768px) */
+@media (max-width: 767px) {
+  .component-grid-items {
+    grid-template-columns: 1fr; /* Mobile: 1 column */
+  }
+}
+
+/* ComponentCard Component */
+
+.component-card {
+  background: var(--mark-bg-elevated);
+  border: 1px solid var(--mark-border);
+  border-radius: var(--mark-radius-lg);
+  padding: 32px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.component-card:hover {
+  border-color: color-mix(in srgb, var(--mark-accent-primary) 40%, transparent);
+  transform: translateY(-4px);
+}
+
+.component-card.has-overlay {
+  cursor: pointer;
+}
+
+.component-card-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.component-card-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.component-card-name {
+  font-family: var(--mark-font-display), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--mark-text, var(--mark-fg));
+  margin: 0;
+}
+
+.component-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.component-card-category {
+  background: var(--mark-bg);
+  border: 1px solid var(--mark-border);
+  border-radius: var(--mark-radius-pill);
+  padding: 4px 12px;
+  font-family: var(--mark-font-body), sans-serif;
+  font-size: 12px;
+  color: var(--mark-text-muted, color-mix(in srgb, var(--mark-fg) 60%, transparent));
+}
+
+.component-card-docs-link {
+  font-family: var(--mark-font-body), sans-serif;
+  font-size: 13px;
+  color: var(--mark-accent-primary);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s ease;
+}
+
+.component-card:hover .component-card-docs-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* PreviewOverlay Component */
+
+.preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Hero Section */
+
+.components-showcase-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px;
+}
+
+.hero-tag {
+  color: var(--mark-fg);
+  opacity: 0.6;
+  font-family: var(--mark-font-body), sans-serif;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.hero-heading {
+  font-family: var(--mark-font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(40px, 5vw, 60px);
+  color: var(--mark-fg);
+  margin: 0 0 24px 0;
+}
+
+.hero-subtext {
+  font-family: var(--mark-font-body), sans-serif;
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--mark-fg);
+  opacity: 0.8;
+  max-width: 672px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* CTA Section */
+
+.components-showcase-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px;
+  background: var(--mark-bg-surface);
+}
+
+.cta-heading {
+  font-family: var(--mark-font-display), sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  color: var(--mark-fg);
+  margin: 0 0 16px 0;
+}
+
+.cta-subtext {
+  font-family: var(--mark-font-body), sans-serif;
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--mark-fg);
+  opacity: 0.8;
+  max-width: 672px;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: var(--mark-radius-lg);
+  background: var(--mark-accent-primary);
+  color: var(--mark-bg);
+  font-family: var(--mark-font-display), sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all var(--mark-duration-normal) var(--mark-ease-smooth);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--mark-accent-primary) 30%, transparent);
+}
+
+/* Page Container */
+
+.components-showcase-page {
+  width: 100%;
+  min-height: 100vh;
+}

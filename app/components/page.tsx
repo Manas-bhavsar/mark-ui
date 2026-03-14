@@ -1,5 +1,14 @@
-import ComingSoon from "@/components/ui/ComingSoon";
+import ComponentsShowcaseHero from '@/components/showcase/ComponentsShowcaseHero';
+import ComponentsShowcaseLayout from '@/components/showcase/ComponentsShowcaseLayout';
+import ComponentsShowcaseCTA from '@/components/showcase/ComponentsShowcaseCTA';
+import '@/styles/showcase.css';
 
 export default function ComponentsPage() {
-  return <ComingSoon pageName="Components" />;
+  return (
+    <div className="components-showcase-page">
+      <ComponentsShowcaseHero />
+      <ComponentsShowcaseLayout />
+      <ComponentsShowcaseCTA />
+    </div>
+  );
 }
