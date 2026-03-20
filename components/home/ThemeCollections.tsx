@@ -4,9 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import {
-  professionalThemes,
-  funThemes,
-  type ThemeDefinition,
+  themesByCollection,
+  type Theme,
 } from "@/components/theme/themes";
 
 function ThemePreviewCard({
@@ -14,11 +13,11 @@ function ThemePreviewCard({
   isActive,
   onSelect,
 }: {
-  theme: ThemeDefinition;
+  theme: Theme;
   isActive: boolean;
   onSelect: () => void;
 }) {
-  const disabled = !theme.live;
+  const disabled = theme.status !== 'live';
 
   return (
     <motion.div
@@ -29,22 +28,22 @@ function ThemePreviewCard({
       whileHover={disabled ? {} : { scale: 1.06 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       style={{
-        borderColor: isActive ? theme.primary : undefined,
-        boxShadow: isActive ? `0 0 16px ${theme.primary}40` : undefined,
+        borderColor: isActive ? theme.tokens.accentPrimary : undefined,
+        boxShadow: isActive ? `0 0 16px ${theme.tokens.accentPrimary}40` : undefined,
       }}
     >
-      <div className="theme-preview-bg" style={{ background: theme.secondary }}>
+      <div className="theme-preview-bg" style={{ background: theme.tokens.accentSecondary }}>
         <span className="theme-preview-name">{theme.name}</span>
         {disabled && <span className="theme-preview-soon">Soon</span>}
       </div>
       <div className="theme-preview-strip">
         <div
           className="theme-preview-strip-half"
-          style={{ background: theme.primary }}
+          style={{ background: theme.tokens.accentPrimary }}
         />
         <div
           className="theme-preview-strip-half"
-          style={{ background: theme.secondary }}
+          style={{ background: theme.tokens.accentSecondary }}
         />
       </div>
     </motion.div>
@@ -101,7 +100,7 @@ export default function ThemeCollections() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          {professionalThemes.map((t) => (
+          {themesByCollection.professional.map((t) => (
             <ThemePreviewCard
               key={t.id}
               theme={t}
@@ -120,7 +119,7 @@ export default function ThemeCollections() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          {funThemes.map((t) => (
+          {themesByCollection.fun.map((t) => (
             <ThemePreviewCard
               key={t.id}
               theme={t}

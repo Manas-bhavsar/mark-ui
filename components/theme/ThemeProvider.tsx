@@ -8,36 +8,33 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-
-type ThemeName = string;
+import { applyTheme, defaultTheme, type ThemeId } from "./themes";
 
 interface ThemeContextValue {
-  theme: ThemeName;
-  setTheme: (theme: ThemeName) => void;
+  theme: ThemeId;
+  setTheme: (theme: ThemeId) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 const STORAGE_KEY = "mark-ui-theme";
-const DEFAULT_THEME = "monochrome";
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>(DEFAULT_THEME);
+  const [theme, setThemeState] = useState<ThemeId>(defaultTheme);
   const [mounted, setMounted] = useState(false);
 
   // Hydrate from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      setThemeState(stored);
-      document.documentElement.setAttribute("data-theme", stored);
-    }
+    const stored = localStorage.getItem(STORAGE_KEY) as ThemeId | null;
+    const initial = stored ?? defaultTheme;
+    setThemeState(initial);
+    applyTheme(initial);
     setMounted(true);
   }, []);
 
-  const setTheme = useCallback((newTheme: ThemeName) => {
+  const setTheme = useCallback((newTheme: ThemeId) => {
     setThemeState(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
+    applyTheme(newTheme);
     localStorage.setItem(STORAGE_KEY, newTheme);
   }, []);
 

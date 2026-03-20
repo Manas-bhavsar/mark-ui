@@ -6,35 +6,18 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import {
-  professionalThemes,
-  funThemes,
-  type ThemeDefinition,
+  themesByCollection,
+  themes,
+  type Theme,
 } from "@/components/theme/themes";
 
-/* ─── Personality lines per theme ─── */
-const personality: Record<string, string> = {
-  monochrome: "Sharp. Professional. Default.",
-  arctic: "Cool, corporate, precise.",
-  obsidian: "Premium dark. Quietly powerful.",
-  ivory: "Warm, minimal, refined.",
-  slate: "Serious, structured, reliable.",
-  sage: "Calm productivity. Clear focus.",
-  carbon: "Industrial bold. High contrast.",
-  cyberpunk: "Electric. Wild. Unforgettable.",
-  shinigami: "Dark gold. Deadly elegant.",
-  titan: "Military grit. Earned strength.",
-  nebula: "Cosmic scale. Infinite depth.",
-  matrixx: "Terminal green. Digital reality.",
-  gotham: "Dark knight energy. Zero compromise.",
-  akira: "Neo Tokyo. Speed and chaos.",
-  hobbit: "Earthy warmth. An unexpected journey.",
-};
+
 
 /* ─── Mini-preview rendered in each card's colours ─── */
-function CardPreview({ theme }: { theme: ThemeDefinition }) {
-  const bg = theme.secondary;
+function CardPreview({ theme }: { theme: Theme }) {
+  const bg = theme.tokens.accentSecondary;
   const fg = "#FAFAFA";
-  const primary = theme.primary;
+  const primary = theme.tokens.accentPrimary;
   const border = "rgba(255,255,255,0.1)";
 
   return (
@@ -83,12 +66,12 @@ function ThemeCard({
   isActive,
   onSelect,
 }: {
-  theme: ThemeDefinition;
+  theme: Theme;
   isActive: boolean;
   onSelect: () => void;
 }) {
-  const live = theme.live;
-  const infoBg = `color-mix(in srgb, ${theme.secondary} 85%, #ffffff)`;
+  const live = theme.status === 'live';
+  const infoBg = `color-mix(in srgb, ${theme.tokens.accentSecondary} 85%, #ffffff)`;
 
   return (
     <motion.div
@@ -98,15 +81,15 @@ function ThemeCard({
         live
           ? {
               scale: 1.03,
-              borderColor: theme.primary,
-              boxShadow: `0 0 24px ${theme.primary}30`,
+              borderColor: theme.tokens.accentPrimary,
+              boxShadow: `0 0 24px ${theme.tokens.accentPrimary}30`,
             }
           : {}
       }
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       style={{
-        borderColor: isActive ? theme.primary : undefined,
-        boxShadow: isActive ? `0 0 20px ${theme.primary}30` : undefined,
+        borderColor: isActive ? theme.tokens.accentPrimary : undefined,
+        boxShadow: isActive ? `0 0 20px ${theme.tokens.accentPrimary}30` : undefined,
       }}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: live ? 1 : 0.7, y: 0 }}
@@ -121,24 +104,24 @@ function ThemeCard({
           </h3>
         </div>
         <p className="theme-card-personality" style={{ color: "#FAFAFA" }}>
-          {personality[theme.id] ?? ""}
+          {theme.personality}
         </p>
         <div className="theme-card-footer">
           <div className="theme-card-dots">
             <span
               className="theme-card-dot"
-              style={{ background: theme.primary }}
+              style={{ background: theme.tokens.accentPrimary }}
             />
             <span
               className="theme-card-dot"
-              style={{ background: theme.secondary }}
+              style={{ background: theme.tokens.accentSecondary }}
             />
           </div>
           {live ? (
             <button
               className="theme-card-preview-btn"
               type="button"
-              style={{ background: theme.primary, color: theme.secondary }}
+              style={{ background: theme.tokens.accentPrimary, color: theme.tokens.accentSecondary }}
               onClick={(e) => {
                 e.stopPropagation();
                 onSelect();
@@ -162,11 +145,11 @@ function ThemeCard({
 export default function ThemesPage() {
   const { theme: activeTheme, setTheme } = useTheme();
 
-  const liveCount = [...professionalThemes, ...funThemes].filter(
-    (t) => t.live
+  const liveCount = themes.filter(
+    (t) => t.status === 'live'
   ).length;
-  const plannedCount = [...professionalThemes, ...funThemes].filter(
-    (t) => !t.live
+  const plannedCount = themes.filter(
+    (t) => t.status === 'planned'
   ).length;
 
   return (
@@ -233,7 +216,7 @@ export default function ThemesPage() {
           </motion.p>
 
           <div className="themes-grid">
-            {professionalThemes.map((t) => (
+            {themesByCollection.professional.map((t) => (
               <ThemeCard
                 key={t.id}
                 theme={t}
@@ -269,7 +252,7 @@ export default function ThemesPage() {
           </motion.p>
 
           <div className="themes-grid">
-            {funThemes.map((t) => (
+            {themesByCollection.fun.map((t) => (
               <ThemeCard
                 key={t.id}
                 theme={t}

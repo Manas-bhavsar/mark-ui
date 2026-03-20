@@ -3,18 +3,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
-import { professionalThemes, funThemes, type ThemeDefinition } from "./themes";
+import { themesByCollection, type Theme } from "./themes";
 
 function ThemeCard({
   theme,
   isActive,
   onSelect,
 }: {
-  theme: ThemeDefinition;
+  theme: Theme;
   isActive: boolean;
   onSelect: () => void;
 }) {
-  if (!theme.live) {
+  if (theme.status !== 'live') {
     return (
       <div
         className="flex items-center gap-3 px-3 py-2.5 rounded-lg opacity-40 cursor-not-allowed"
@@ -27,14 +27,14 @@ function ThemeCard({
           <span
             className="w-3.5 h-3.5 rounded-full border"
             style={{
-              backgroundColor: theme.primary,
+              backgroundColor: theme.tokens.accentPrimary,
               borderColor: "var(--mark-border)",
             }}
           />
           <span
             className="w-3.5 h-3.5 rounded-full border"
             style={{
-              backgroundColor: theme.secondary,
+              backgroundColor: theme.tokens.accentSecondary,
               borderColor: "var(--mark-border)",
             }}
           />
@@ -80,15 +80,15 @@ function ThemeCard({
         <span
           className="w-3.5 h-3.5 rounded-full"
           style={{
-            backgroundColor: theme.primary,
+            backgroundColor: theme.tokens.accentPrimary,
             boxShadow: isActive
-              ? `0 0 8px ${theme.primary}40`
+              ? `0 0 8px ${theme.tokens.accentPrimary}40`
               : "none",
           }}
         />
         <span
           className="w-3.5 h-3.5 rounded-full"
-          style={{ backgroundColor: theme.secondary }}
+          style={{ backgroundColor: theme.tokens.accentSecondary }}
         />
       </div>
       <span
@@ -231,7 +231,7 @@ export default function ThemePanel() {
                     💼 Professional
                   </p>
                   <div className="space-y-1.5">
-                    {professionalThemes.map((t) => (
+                    {themesByCollection.professional.map((t) => (
                       <ThemeCard
                         key={t.id}
                         theme={t}
@@ -259,7 +259,7 @@ export default function ThemePanel() {
                     🎮 Fun
                   </p>
                   <div className="space-y-1.5">
-                    {funThemes.map((t) => (
+                    {themesByCollection.fun.map((t) => (
                       <ThemeCard
                         key={t.id}
                         theme={t}
