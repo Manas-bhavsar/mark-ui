@@ -14,7 +14,7 @@ export default function GetStartedCTA() {
   };
 
   return (
-    <section className="home-section" style={{ background: "var(--mark-bg)" }}>
+    <section className="home-section">
       <div className="home-section-inner" style={{ textAlign: "center" }}>
         <motion.h2
           className="cta-heading"

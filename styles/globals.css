@@ -133,18 +133,128 @@
    Theme Overrides
    ═══════════════════════════════════════════ */
 
+/* 💼 PROFESSIONAL COLLECTION */
+
 [data-theme="monochrome"] {
   --mark-accent-primary:   #FAFAFA;
   --mark-accent-secondary: #0A0A0A;
   --mark-accent-glow:      rgba(250, 250, 250, 0.15);
   --mark-accent-subtle:    rgba(250, 250, 250, 0.06);
+  --docs-bg:               #0A0A0A;
 }
+
+[data-theme="arctic"] {
+  --mark-accent-primary:   #2563EB;
+  --mark-accent-secondary: #1E40AF;
+  --mark-accent-glow:      rgba(37, 99, 235, 0.25);
+  --mark-accent-subtle:    rgba(37, 99, 235, 0.08);
+  --docs-bg:               #080E1A;
+}
+
+[data-theme="obsidian"] {
+  --mark-accent-primary:   #6366F1;
+  --mark-accent-secondary: #4F46E5;
+  --mark-accent-glow:      rgba(99, 102, 241, 0.25);
+  --mark-accent-subtle:    rgba(99, 102, 241, 0.08);
+  --docs-bg:               #0B0A14;
+}
+
+[data-theme="ivory"] {
+  --mark-accent-primary:   #D97706;
+  --mark-accent-secondary: #B45309;
+  --mark-accent-glow:      rgba(217, 119, 6, 0.25);
+  --mark-accent-subtle:    rgba(217, 119, 6, 0.08);
+  --docs-bg:               #110F0A;
+}
+
+[data-theme="slate"] {
+  --mark-accent-primary:   #0EA5E9;
+  --mark-accent-secondary: #334155;
+  --mark-accent-glow:      rgba(14, 165, 233, 0.25);
+  --mark-accent-subtle:    rgba(14, 165, 233, 0.08);
+  --docs-bg:               #090C10;
+}
+
+[data-theme="sage"] {
+  --mark-accent-primary:   #4D7C6F;
+  --mark-accent-secondary: #374151;
+  --mark-accent-glow:      rgba(77, 124, 111, 0.25);
+  --mark-accent-subtle:    rgba(77, 124, 111, 0.08);
+  --docs-bg:               #090E0C;
+}
+
+[data-theme="carbon"] {
+  --mark-accent-primary:   #EF4444;
+  --mark-accent-secondary: #E5E7EB;
+  --mark-accent-glow:      rgba(239, 68, 68, 0.25);
+  --mark-accent-subtle:    rgba(239, 68, 68, 0.08);
+  --docs-bg:               #0F0F0F;
+}
+
+/* 🎮 FUN COLLECTION */
 
 [data-theme="cyberpunk"] {
   --mark-accent-primary:   #FF2D9B;
   --mark-accent-secondary: #00F5FF;
   --mark-accent-glow:      rgba(255, 45, 155, 0.25);
   --mark-accent-subtle:    rgba(255, 45, 155, 0.08);
+  --docs-bg:               #06010F;
+}
+
+[data-theme="shinigami"] {
+  --mark-accent-primary:   #C9A84C;
+  --mark-accent-secondary: #1F2937;
+  --mark-accent-glow:      rgba(201, 168, 76, 0.25);
+  --mark-accent-subtle:    rgba(201, 168, 76, 0.08);
+  --docs-bg:               #07060F;
+}
+
+[data-theme="titan"] {
+  --mark-accent-primary:   #8B6914;
+  --mark-accent-secondary: #2D5A3D;
+  --mark-accent-glow:      rgba(139, 105, 20, 0.25);
+  --mark-accent-subtle:    rgba(139, 105, 20, 0.08);
+  --docs-bg:               #0A0C07;
+}
+
+[data-theme="nebula"] {
+  --mark-accent-primary:   #9B59B6;
+  --mark-accent-secondary: #E74C3C;
+  --mark-accent-glow:      rgba(155, 89, 182, 0.25);
+  --mark-accent-subtle:    rgba(155, 89, 182, 0.08);
+  --docs-bg:               #08060F;
+}
+
+[data-theme="matrixx"] {
+  --mark-accent-primary:   #00FF41;
+  --mark-accent-secondary: #003D10;
+  --mark-accent-glow:      rgba(0, 255, 65, 0.25);
+  --mark-accent-subtle:    rgba(0, 255, 65, 0.08);
+  --docs-bg:               #010A01;
+}
+
+[data-theme="gotham"] {
+  --mark-accent-primary:   #FFD700;
+  --mark-accent-secondary: #2C2C2C;
+  --mark-accent-glow:      rgba(255, 215, 0, 0.25);
+  --mark-accent-subtle:    rgba(255, 215, 0, 0.08);
+  --docs-bg:               #070707;
+}
+
+[data-theme="akira"] {
+  --mark-accent-primary:   #FF4500;
+  --mark-accent-secondary: #0A0AFF;
+  --mark-accent-glow:      rgba(255, 69, 0, 0.25);
+  --mark-accent-subtle:    rgba(255, 69, 0, 0.08);
+  --docs-bg:               #0A0500;
+}
+
+[data-theme="hobbit"] {
+  --mark-accent-primary:   #8B7355;
+  --mark-accent-secondary: #4A7C59;
+  --mark-accent-glow:      rgba(139, 115, 85, 0.25);
+  --mark-accent-subtle:    rgba(139, 115, 85, 0.08);
+  --docs-bg:               #080A05;
 }
 
 /* ═══════════════════════════════════════════
@@ -166,6 +276,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden; /* Prevent horizontal scroll globally */
+  background-color: var(--docs-bg, #0A0A0A);
+  transition: background-color var(--mark-duration-slow) var(--mark-ease-smooth);
 }
 
 h1 {

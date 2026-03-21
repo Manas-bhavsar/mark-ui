@@ -191,12 +191,27 @@
   display: flex;
   gap: 32px;
   align-items: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 768px) {
   .steps-row {
     flex-direction: column;
     gap: 40px;
+    overflow-x: visible;
+  }
+}
+
+/* Improve tablet layout */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .steps-row {
+    gap: 24px;
+  }
+  
+  .step-code {
+    font-size: 12px;
   }
 }
 
@@ -204,6 +219,16 @@
   flex: 1;
   position: relative;
   min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Improve mobile step layout */
+@media (max-width: 768px) {
+  .step-card {
+    max-width: none;
+    overflow: visible;
+  }
 }
 
 .step-number {
@@ -247,6 +272,22 @@
   overflow-x: auto;
   line-height: 1.6;
   transition: all var(--mark-duration-normal) var(--mark-ease-smooth);
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Improve mobile code display */
+@media (max-width: 768px) {
+  .step-code {
+    font-size: 12px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Step arrows (desktop only) */

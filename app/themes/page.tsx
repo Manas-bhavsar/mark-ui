@@ -155,7 +155,7 @@ export default function ThemesPage() {
   return (
     <>
       {/* ── Section 1: Hero ── */}
-      <section className="home-section" style={{ background: "var(--mark-bg)" }}>
+      <section className="home-section">
         <div className="home-section-inner">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -193,7 +193,7 @@ export default function ThemesPage() {
       </section>
 
       {/* ── Section 2: Professional Collection ── */}
-      <section className="home-section" style={{ background: "var(--mark-bg)" }}>
+      <section className="home-section">
         <div className="home-section-inner">
           <motion.p
             className="collection-section-heading"
@@ -229,7 +229,7 @@ export default function ThemesPage() {
       </section>
 
       {/* ── Section 3: Fun Collection ── */}
-      <section className="home-section" style={{ background: "var(--mark-bg)" }}>
+      <section className="home-section">
         <div className="home-section-inner">
           <motion.p
             className="collection-section-heading"
@@ -328,7 +328,7 @@ setTheme('cyberpunk')`}
       </section>
 
       {/* ── Section 5: CTA ── */}
-      <section className="home-section" style={{ background: "var(--mark-bg)" }}>
+      <section className="home-section">
         <div
           className="home-section-inner"
           style={{ textAlign: "center" }}

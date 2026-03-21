@@ -20,7 +20,7 @@ function MiniToggle() {
 
 export default function ShowcaseSection() {
   return (
-    <section className="home-section" style={{ background: "var(--mark-bg)" }}>
+    <section className="home-section">
       <div className="home-section-inner">
         <motion.p
           className="section-label"
