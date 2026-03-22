@@ -1,111 +1,85 @@
 'use client';
 
+import { useState } from 'react';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from '@/packages/core';
+
 /**
  * ModalPreview Component
  * 
- * Renders a sample modal for the showcase page overlay.
- * Features centered layout, title, body text, and action buttons.
- * Uses CSS custom properties for theming and --mark-ease-snappy for animations.
+ * Renders a real modal component for the showcase page overlay.
+ * Uses the actual Modal component with proper functionality.
  */
 
 export default function ModalPreview() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div
-      style={{
-        background: 'var(--mark-bg-elevated)',
-        border: '1px solid var(--mark-border)',
-        borderRadius: 'var(--mark-radius-lg)',
-        padding: '32px',
-        width: '90%',
-        maxWidth: '480px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '24px',
-      }}
-    >
-      {/* Modal Title */}
-      <h2
-        style={{
-          fontFamily: 'var(--mark-font-display)',
-          fontWeight: 700,
-          fontSize: '24px',
-          color: 'var(--mark-text)',
-          margin: 0,
-        }}
-      >
-        Sample Modal
-      </h2>
-
-      {/* Modal Body */}
-      <p
-        style={{
-          fontFamily: 'var(--mark-font-body)',
-          fontSize: '16px',
-          color: 'var(--mark-text)',
-          lineHeight: 1.6,
-          margin: 0,
-        }}
-      >
-        This is what a modal looks like in MARK UI. It&apos;s centered, animated, and fully themeable.
-      </p>
-
-      {/* Action Buttons */}
+    <>
+      {/* Trigger Button */}
       <div
         style={{
+          background: 'var(--mark-bg-elevated)',
+          border: '1px solid var(--mark-border)',
+          borderRadius: 'var(--mark-radius-lg)',
+          padding: '32px',
+          width: '90%',
+          maxWidth: '480px',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
           display: 'flex',
-          gap: '12px',
-          justifyContent: 'flex-end',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '16px',
         }}
       >
-        {/* Cancel Button */}
-        <button
+        <h3
           style={{
-            background: 'var(--mark-bg)',
-            border: '1px solid var(--mark-border)',
-            borderRadius: 'var(--mark-radius-md)',
-            padding: '10px 20px',
             fontFamily: 'var(--mark-font-display)',
-            fontWeight: 600,
+            fontWeight: 700,
+            fontSize: '20px',
+            color: 'var(--mark-text)',
+            margin: 0,
+          }}
+        >
+          Modal Component
+        </h3>
+        <p
+          style={{
+            fontFamily: 'var(--mark-font-body)',
             fontSize: '14px',
             color: 'var(--mark-text)',
-            cursor: 'pointer',
-            transition: 'all 0.2s var(--mark-ease-snappy)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'var(--mark-accent-primary)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'var(--mark-border)';
+            textAlign: 'center',
+            margin: 0,
           }}
         >
-          Cancel
-        </button>
-
-        {/* Confirm Button */}
-        <button
-          style={{
-            background: 'var(--mark-accent-primary)',
-            border: 'none',
-            borderRadius: 'var(--mark-radius-md)',
-            padding: '10px 20px',
-            fontFamily: 'var(--mark-font-display)',
-            fontWeight: 600,
-            fontSize: '14px',
-            color: 'var(--mark-bg)',
-            cursor: 'pointer',
-            transition: 'all 0.2s var(--mark-ease-snappy)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.opacity = '0.9';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.opacity = '1';
-          }}
-        >
-          Confirm
-        </button>
+          Click to see the modal in action
+        </p>
+        <Button onClick={() => setIsOpen(true)}>
+          Open Modal
+        </Button>
       </div>
-    </div>
+
+      {/* Actual Modal */}
+      <Modal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        size="md"
+      >
+        <ModalHeader
+          title="Sample Modal"
+          onClose={() => setIsOpen(false)}
+        />
+        <ModalBody>
+          <p>This is what a modal looks like in MARK UI. It's centered, animated, and fully themeable with proper focus management and accessibility features.</p>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="secondary" onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button onClick={() => setIsOpen(false)}>
+            Confirm
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </>
   );
 }

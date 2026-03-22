@@ -89,12 +89,17 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6"
         style={{
           height: "64px",
-          backgroundColor: scrolled ? "var(--mark-bg)" : "transparent",
+          backgroundColor: scrolled ? "var(--docs-navbar-bg, rgba(10,10,10,0.85))" : "transparent",
           backdropFilter: scrolled ? "blur(12px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
           borderBottom: scrolled
             ? "1px solid var(--mark-border)"
             : "1px solid transparent",
-          transition: `all var(--mark-duration-normal) var(--mark-ease-smooth)`,
+          transition: `
+            background-color var(--mark-duration-slow) var(--mark-ease-smooth),
+            border-color var(--mark-duration-slow) var(--mark-ease-smooth),
+            backdrop-filter var(--mark-duration-normal) var(--mark-ease-smooth)
+          `,
         }}
       >
         {/* Logo */}

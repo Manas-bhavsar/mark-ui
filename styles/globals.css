@@ -141,6 +141,7 @@
   --mark-accent-glow:      rgba(250, 250, 250, 0.15);
   --mark-accent-subtle:    rgba(250, 250, 250, 0.06);
   --docs-bg:               #0A0A0A;
+  --docs-navbar-bg:        rgba(10, 10, 10, 0.85);
 }
 
 [data-theme="arctic"] {
@@ -149,6 +150,7 @@
   --mark-accent-glow:      rgba(37, 99, 235, 0.25);
   --mark-accent-subtle:    rgba(37, 99, 235, 0.08);
   --docs-bg:               #080E1A;
+  --docs-navbar-bg:        rgba(8, 14, 26, 0.85);
 }
 
 [data-theme="obsidian"] {
@@ -157,6 +159,7 @@
   --mark-accent-glow:      rgba(99, 102, 241, 0.25);
   --mark-accent-subtle:    rgba(99, 102, 241, 0.08);
   --docs-bg:               #0B0A14;
+  --docs-navbar-bg:        rgba(11, 10, 20, 0.85);
 }
 
 [data-theme="ivory"] {
@@ -165,6 +168,7 @@
   --mark-accent-glow:      rgba(217, 119, 6, 0.25);
   --mark-accent-subtle:    rgba(217, 119, 6, 0.08);
   --docs-bg:               #110F0A;
+  --docs-navbar-bg:        rgba(17, 15, 10, 0.85);
 }
 
 [data-theme="slate"] {
@@ -173,6 +177,7 @@
   --mark-accent-glow:      rgba(14, 165, 233, 0.25);
   --mark-accent-subtle:    rgba(14, 165, 233, 0.08);
   --docs-bg:               #090C10;
+  --docs-navbar-bg:        rgba(9, 12, 16, 0.85);
 }
 
 [data-theme="sage"] {
@@ -181,6 +186,7 @@
   --mark-accent-glow:      rgba(77, 124, 111, 0.25);
   --mark-accent-subtle:    rgba(77, 124, 111, 0.08);
   --docs-bg:               #090E0C;
+  --docs-navbar-bg:        rgba(9, 14, 12, 0.85);
 }
 
 [data-theme="carbon"] {
@@ -189,6 +195,7 @@
   --mark-accent-glow:      rgba(239, 68, 68, 0.25);
   --mark-accent-subtle:    rgba(239, 68, 68, 0.08);
   --docs-bg:               #0F0F0F;
+  --docs-navbar-bg:        rgba(15, 15, 15, 0.85);
 }
 
 /* 🎮 FUN COLLECTION */
@@ -199,6 +206,7 @@
   --mark-accent-glow:      rgba(255, 45, 155, 0.25);
   --mark-accent-subtle:    rgba(255, 45, 155, 0.08);
   --docs-bg:               #06010F;
+  --docs-navbar-bg:        rgba(6, 1, 15, 0.85);
 }
 
 [data-theme="shinigami"] {
@@ -207,6 +215,7 @@
   --mark-accent-glow:      rgba(201, 168, 76, 0.25);
   --mark-accent-subtle:    rgba(201, 168, 76, 0.08);
   --docs-bg:               #07060F;
+  --docs-navbar-bg:        rgba(7, 6, 15, 0.85);
 }
 
 [data-theme="titan"] {
@@ -215,6 +224,7 @@
   --mark-accent-glow:      rgba(139, 105, 20, 0.25);
   --mark-accent-subtle:    rgba(139, 105, 20, 0.08);
   --docs-bg:               #0A0C07;
+  --docs-navbar-bg:        rgba(10, 12, 7, 0.85);
 }
 
 [data-theme="nebula"] {
@@ -223,6 +233,7 @@
   --mark-accent-glow:      rgba(155, 89, 182, 0.25);
   --mark-accent-subtle:    rgba(155, 89, 182, 0.08);
   --docs-bg:               #08060F;
+  --docs-navbar-bg:        rgba(8, 6, 15, 0.85);
 }
 
 [data-theme="matrixx"] {
@@ -231,6 +242,7 @@
   --mark-accent-glow:      rgba(0, 255, 65, 0.25);
   --mark-accent-subtle:    rgba(0, 255, 65, 0.08);
   --docs-bg:               #010A01;
+  --docs-navbar-bg:        rgba(1, 10, 1, 0.85);
 }
 
 [data-theme="gotham"] {
@@ -239,6 +251,7 @@
   --mark-accent-glow:      rgba(255, 215, 0, 0.25);
   --mark-accent-subtle:    rgba(255, 215, 0, 0.08);
   --docs-bg:               #070707;
+  --docs-navbar-bg:        rgba(7, 7, 7, 0.85);
 }
 
 [data-theme="akira"] {
@@ -247,6 +260,7 @@
   --mark-accent-glow:      rgba(255, 69, 0, 0.25);
   --mark-accent-subtle:    rgba(255, 69, 0, 0.08);
   --docs-bg:               #0A0500;
+  --docs-navbar-bg:        rgba(10, 5, 0, 0.85);
 }
 
 [data-theme="hobbit"] {
@@ -255,6 +269,7 @@
   --mark-accent-glow:      rgba(139, 115, 85, 0.25);
   --mark-accent-subtle:    rgba(139, 115, 85, 0.08);
   --docs-bg:               #080A05;
+  --docs-navbar-bg:        rgba(8, 10, 5, 0.85);
 }
 
 /* ═══════════════════════════════════════════

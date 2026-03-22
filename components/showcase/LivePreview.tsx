@@ -13,6 +13,7 @@ import Toggle from '@mark-ui/components/inputs/Toggle/Toggle'
 import Badge from '@mark-ui/components/display/Badge/Badge'
 import Card from '@mark-ui/components/display/Card/Card'
 import Spinner from '@mark-ui/components/feedback/Spinner/Spinner'
+import Skeleton from '@mark-ui/components/feedback/Skeleton/Skeleton'
 import Alert from '@mark-ui/components/feedback/Alert/Alert'
 import Divider from '@mark-ui/components/layout/Divider/Divider'
 import Container from '@mark-ui/components/layout/Container/Container'
@@ -235,43 +236,8 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
       return (
         <div style={stageStyles}>
           <div style={{ width: '160px' }}>
-            <div
-              style={{
-                height: '14px',
-                background: 'var(--mark-bg-elevated)',
-                borderRadius: 'var(--mark-radius-sm)',
-                marginBottom: '6px',
-                animation: 'pulse 1.5s ease-in-out infinite',
-              }}
-            />
-            <div
-              style={{
-                height: '14px',
-                background: 'var(--mark-bg-elevated)',
-                borderRadius: 'var(--mark-radius-sm)',
-                width: '70%',
-                marginBottom: '6px',
-                animation: 'pulse 1.5s ease-in-out infinite',
-                animationDelay: '0.2s',
-              }}
-            />
-            <div
-              style={{
-                height: '14px',
-                background: 'var(--mark-bg-elevated)',
-                borderRadius: 'var(--mark-radius-sm)',
-                width: '40%',
-                animation: 'pulse 1.5s ease-in-out infinite',
-                animationDelay: '0.4s',
-              }}
-            />
+            <Skeleton variant="text" lines={3} />
           </div>
-          <style>{`
-            @keyframes pulse {
-              0%, 100% { opacity: 1; }
-              50% { opacity: 0.5; }
-            }
-          `}</style>
         </div>
       );
 
