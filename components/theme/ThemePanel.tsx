@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import { themesByCollection, type Theme } from "./themes";
+import { Drawer, Button } from "@/packages/core";
 
 function ThemeCard({
   theme,
@@ -160,120 +161,91 @@ export default function ThemePanel() {
         )}
       </AnimatePresence>
 
-      {/* ── Open Panel ── */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+      {/* ── Drawer Panel ── */}
+      <Drawer
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        placement="right"
+        size="sm"
+        showBackdrop={false}
+        closeOnBackdrop={true}
+      >
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div
+            className="flex items-center justify-between px-5 py-4 flex-shrink-0"
+            style={{
+              borderBottom: "1px solid var(--mark-border)",
+            }}
+          >
+            <h2
+              className="text-sm font-bold tracking-wide uppercase"
+              style={{ color: "var(--mark-fg)", fontFamily: "var(--mark-font-display)" }}
+            >
+              Themes
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-40"
-              style={{ background: "rgba(0,0,0,0.3)" }}
+              aria-label="Close theme panel"
+            >
+              ✕
+            </Button>
+          </div>
+
+          {/* Content */}
+          <div className="px-5 py-4 space-y-5 flex-1 overflow-y-auto">
+            {/* Professional */}
+            <div>
+              <p
+                className="text-xs font-semibold mb-3 uppercase tracking-wider"
+                style={{ color: "var(--mark-fg)", opacity: 0.5 }}
+              >
+                💼 Professional
+              </p>
+              <div className="space-y-1.5">
+                {themesByCollection.professional.map((t) => (
+                  <ThemeCard
+                    key={t.id}
+                    theme={t}
+                    isActive={activeTheme === t.id}
+                    onSelect={() => setTheme(t.id)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div
+              style={{
+                height: "1px",
+                background: "var(--mark-border)",
+              }}
             />
 
-            {/* Panel */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-              }}
-              className="fixed right-0 top-0 bottom-0 z-50 overflow-y-auto"
-              style={{
-                width: "280px",
-                background: "var(--mark-bg-elevated)",
-                borderLeft: "1px solid var(--mark-border)",
-              }}
-            >
-              {/* Header */}
-              <div
-                className="flex items-center justify-between px-5 py-4"
-                style={{
-                  borderBottom: "1px solid var(--mark-border)",
-                }}
+            {/* Fun */}
+            <div>
+              <p
+                className="text-xs font-semibold mb-3 uppercase tracking-wider"
+                style={{ color: "var(--mark-fg)", opacity: 0.5 }}
               >
-                <h2
-                  className="text-sm font-bold tracking-wide uppercase"
-                  style={{ color: "var(--mark-fg)", fontFamily: "var(--mark-font-display)" }}
-                >
-                  Themes
-                </h2>
-                <motion.button
-                  onClick={() => setIsOpen(false)}
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-7 h-7 flex items-center justify-center rounded-md cursor-pointer"
-                  style={{
-                    color: "var(--mark-fg)",
-                    background: "transparent",
-                    border: "none",
-                    fontSize: "16px",
-                    transition: `color var(--mark-duration-fast) var(--mark-ease-smooth)`,
-                  }}
-                >
-                  ✕
-                </motion.button>
+                🎮 Fun
+              </p>
+              <div className="space-y-1.5">
+                {themesByCollection.fun.map((t) => (
+                  <ThemeCard
+                    key={t.id}
+                    theme={t}
+                    isActive={activeTheme === t.id}
+                    onSelect={() => setTheme(t.id)}
+                  />
+                ))}
               </div>
-
-              <div className="px-5 py-4 space-y-5">
-                {/* Professional */}
-                <div>
-                  <p
-                    className="text-xs font-semibold mb-3 uppercase tracking-wider"
-                    style={{ color: "var(--mark-fg)", opacity: 0.5 }}
-                  >
-                    💼 Professional
-                  </p>
-                  <div className="space-y-1.5">
-                    {themesByCollection.professional.map((t) => (
-                      <ThemeCard
-                        key={t.id}
-                        theme={t}
-                        isActive={activeTheme === t.id}
-                        onSelect={() => setTheme(t.id)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {/* Divider */}
-                <div
-                  style={{
-                    height: "1px",
-                    background: "var(--mark-border)",
-                  }}
-                />
-
-                {/* Fun */}
-                <div>
-                  <p
-                    className="text-xs font-semibold mb-3 uppercase tracking-wider"
-                    style={{ color: "var(--mark-fg)", opacity: 0.5 }}
-                  >
-                    🎮 Fun
-                  </p>
-                  <div className="space-y-1.5">
-                    {themesByCollection.fun.map((t) => (
-                      <ThemeCard
-                        key={t.id}
-                        theme={t}
-                        isActive={activeTheme === t.id}
-                        onSelect={() => setTheme(t.id)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </Drawer>
     </>
   );
 }

@@ -45,6 +45,7 @@ export default function Drawer({
   onClose,
   placement = 'right',
   size = 'md',
+  showBackdrop = true,
   closeOnBackdrop = true,
   closeOnEscape = true,
   children,
@@ -207,7 +208,6 @@ export default function Drawer({
     const sizeValue = SIZE_STYLES[size][isHorizontal ? 'horizontal' : 'vertical']
     
     const baseStyles = {
-      position: 'absolute' as const,
       backgroundColor: 'var(--mark-bg)',
       border: '1px solid var(--mark-border)',
       boxShadow: 'var(--mark-shadow-xl)',
@@ -257,20 +257,25 @@ export default function Drawer({
   const drawerContent = (
     <AnimatePresence>
       {open && (
-        <motion.div
-          ref={backdropRef}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          variants={backdropVariants}
-          onClick={handleBackdropClick}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'var(--mark-bg-overlay, rgba(0, 0, 0, 0.5))',
-            zIndex: 'var(--mark-z-drawer, 1000)',
-          }}
-        >
+        <>
+          {/* Backdrop - visible or invisible based on showBackdrop */}
+          <motion.div
+            ref={backdropRef}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={backdropVariants}
+            onClick={handleBackdropClick}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: showBackdrop ? 'var(--mark-bg-overlay, rgba(0, 0, 0, 0.5))' : 'transparent',
+              zIndex: 'var(--mark-z-drawer, 1000)',
+              cursor: showBackdrop ? 'default' : 'auto',
+            }}
+          />
+          
+          {/* Drawer */}
           <motion.div
             ref={drawerRef}
             initial="hidden"
@@ -288,11 +293,15 @@ export default function Drawer({
             tabIndex={-1}
             role="dialog"
             aria-modal="true"
-            style={getDrawerStyles()}
+            style={{
+              ...getDrawerStyles(),
+              position: 'fixed',
+              zIndex: showBackdrop ? 'var(--mark-z-drawer, 1000)' : 'var(--mark-z-drawer, 1000)',
+            }}
           >
             {children}
           </motion.div>
-        </motion.div>
+        </>
       )}
     </AnimatePresence>
   )

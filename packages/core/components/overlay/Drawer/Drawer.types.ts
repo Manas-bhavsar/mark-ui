@@ -7,6 +7,8 @@ export interface DrawerProps {
   placement?: 'left' | 'right' | 'top' | 'bottom'
   /** Drawer size */
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  /** Show backdrop overlay */
+  showBackdrop?: boolean
   /** Close on backdrop click */
   closeOnBackdrop?: boolean
   /** Close on Escape key */

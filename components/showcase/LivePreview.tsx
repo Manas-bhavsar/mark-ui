@@ -10,13 +10,18 @@ import Button from '@mark-ui/components/inputs/Button/Button'
 import Input from '@mark-ui/components/inputs/Input/Input'
 import Checkbox from '@mark-ui/components/inputs/Checkbox/Checkbox'
 import Toggle from '@mark-ui/components/inputs/Toggle/Toggle'
+import Select from '@mark-ui/components/inputs/Select/Select'
 import Badge from '@mark-ui/components/display/Badge/Badge'
+import Avatar from '@mark-ui/components/display/Avatar/Avatar'
 import Card from '@mark-ui/components/display/Card/Card'
+import Tag from '@mark-ui/components/display/Tag/Tag'
 import Spinner from '@mark-ui/components/feedback/Spinner/Spinner'
 import Skeleton from '@mark-ui/components/feedback/Skeleton/Skeleton'
 import Alert from '@mark-ui/components/feedback/Alert/Alert'
 import Divider from '@mark-ui/components/layout/Divider/Divider'
 import Container from '@mark-ui/components/layout/Container/Container'
+import Tooltip from '@mark-ui/components/layout/Tooltip/Tooltip'
+import { Toast } from '@mark-ui/components/overlay/Toast'
 
 interface LivePreviewProps {
   componentId: string;
@@ -65,22 +70,15 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
     case 'Select':
       return (
         <div style={stageStyles}>
-          <select
-            style={{
-              background: 'var(--mark-bg-elevated)',
-              border: '1px solid var(--mark-border)',
-              borderRadius: 'var(--mark-radius-md)',
-              padding: '8px 12px',
-              color: 'var(--mark-fg)',
-              fontFamily: 'var(--mark-font-body)',
-              width: '200px',
-              cursor: 'pointer',
-            }}
-          >
-            <option>Choose option...</option>
-            <option>Option 1</option>
-            <option>Option 2</option>
-          </select>
+          <Select 
+            placeholder="Choose option..."
+            options={[
+              { value: 'option1', label: 'Option 1' },
+              { value: 'option2', label: 'Option 2' },
+              { value: 'option3', label: 'Option 3' }
+            ]}
+            style={{ width: '200px' }}
+          />
         </div>
       );
 
@@ -94,23 +92,11 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
     case 'Avatar':
       return (
         <div style={stageStyles}>
-          <div
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '50%',
-              background: 'var(--mark-accent-primary)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--mark-bg)',
-              fontFamily: 'var(--mark-font-display)',
-              fontWeight: 600,
-              fontSize: '18px',
-            }}
-          >
-            JD
-          </div>
+          <Avatar 
+            name="John Doe"
+            size="md"
+            shape="circle"
+          />
         </div>
       );
 
@@ -145,32 +131,9 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
     case 'Tooltip':
       return (
         <div style={stageStyles}>
-          <div
-            className="tooltip-trigger-group"
-            style={{ position: 'relative', display: 'inline-block' }}
-          >
+          <Tooltip content="Tooltip text" position="top">
             <Button variant="secondary" size="sm">Hover me</Button>
-            <div
-              className="tooltip-popup"
-              style={{
-                position: 'absolute',
-                bottom: '100%',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                marginBottom: '8px',
-                background: 'var(--mark-bg-surface)',
-                border: '1px solid var(--mark-border)',
-                borderRadius: 'var(--mark-radius-sm)',
-                padding: '4px 8px',
-                fontSize: '12px',
-                color: 'var(--mark-fg)',
-                fontFamily: 'var(--mark-font-body)',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Tooltip text
-            </div>
-          </div>
+          </Tooltip>
         </div>
       );
 
@@ -178,8 +141,8 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
       return (
         <div style={stageStyles}>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <Badge variant="default" size="sm">React</Badge>
-            <Badge variant="default" size="sm">TypeScript</Badge>
+            <Tag variant="default" size="sm">React</Tag>
+            <Tag variant="primary" size="sm" removable>TypeScript</Tag>
           </div>
         </div>
       );
@@ -199,28 +162,12 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
       return (
         <div style={{ ...stageStyles, padding: '12px' }}>
           <div style={{ transform: 'scale(0.9)', transformOrigin: 'center', minWidth: '180px' }}>
-            <Card variant="default" padding="sm">
-              <div
-                style={{
-                  fontFamily: 'var(--mark-font-display)',
-                  fontWeight: 600,
-                  color: 'var(--mark-fg)',
-                  fontSize: '13px',
-                }}
-              >
-                Success!
-              </div>
-              <div
-                style={{
-                  fontFamily: 'var(--mark-font-body)',
-                  fontSize: '12px',
-                  color: 'var(--mark-fg-muted)',
-                  marginTop: '2px',
-                }}
-              >
-                Action completed
-              </div>
-            </Card>
+            <Toast
+              variant="success"
+              title="Success!"
+              message="Action completed"
+              onDismiss={() => {}}
+            />
           </div>
         </div>
       );

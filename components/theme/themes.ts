@@ -65,7 +65,7 @@ const professionalThemes: Theme[] = [
     id: 'arctic',
     name: 'Arctic',
     collection: 'professional',
-    status: 'planned',
+    status: 'live',
     personality: 'Cool, corporate, precise.',
     tokens: {
       accentPrimary:   '#2563EB',
@@ -78,7 +78,7 @@ const professionalThemes: Theme[] = [
     id: 'obsidian',
     name: 'Obsidian',
     collection: 'professional',
-    status: 'planned',
+    status: 'live',
     personality: 'Premium dark. Quietly powerful.',
     tokens: {
       accentPrimary:   '#6366F1',
@@ -202,7 +202,7 @@ const funThemes: Theme[] = [
     id: 'matrixx',
     name: 'Matrixx',
     collection: 'fun',
-    status: 'planned',
+    status: 'live',
     personality: 'Terminal green. Digital reality.',
     tokens: {
       accentPrimary:   '#00FF41',
@@ -215,7 +215,7 @@ const funThemes: Theme[] = [
     id: 'gotham',
     name: 'Gotham',
     collection: 'fun',
-    status: 'planned',
+    status: 'live',
     personality: 'Dark knight energy. Zero compromise.',
     tokens: {
       accentPrimary:   '#FFD700',
@@ -263,9 +263,20 @@ export const themes: Theme[] = [
 
 export const liveThemes = themes.filter(t => t.status === 'live')
 
+// Sort themes by status: live themes first, then planned themes
+const sortThemesByStatus = (themes: Theme[]): Theme[] => {
+  return [...themes].sort((a, b) => {
+    // Live themes come first (status 'live' < status 'planned')
+    if (a.status === 'live' && b.status === 'planned') return -1
+    if (a.status === 'planned' && b.status === 'live') return 1
+    // If same status, maintain original order
+    return 0
+  })
+}
+
 export const themesByCollection = {
-  professional: professionalThemes,
-  fun: funThemes,
+  professional: sortThemesByStatus(professionalThemes),
+  fun: sortThemesByStatus(funThemes),
 }
 
 export const getTheme = (id: ThemeId): Theme => {
@@ -274,10 +285,39 @@ export const getTheme = (id: ThemeId): Theme => {
   return theme
 }
 
+// Check if a theme is live and can be applied
+export const isThemeLive = (id: ThemeId): boolean => {
+  const theme = getTheme(id)
+  return theme.status === 'live'
+}
+
+// Get a safe theme ID that's guaranteed to be live
+export const getSafeThemeId = (id: ThemeId): ThemeId => {
+  return isThemeLive(id) ? id : 'monochrome'
+}
+
 // Applies a theme to the document root
 // Call this whenever setTheme() is triggered
-export const applyTheme = (id: ThemeId): void => {
+// Automatically falls back to monochrome if theme is not live
+export const applyTheme = (id: ThemeId): ThemeId => {
   const theme = getTheme(id)
+  
+  // If theme is not live, fallback to monochrome
+  if (theme.status !== 'live') {
+    console.warn(`Theme "${id}" is not live, falling back to monochrome`)
+    const fallbackTheme = getTheme('monochrome')
+    const root = document.documentElement
+
+    root.setAttribute('data-theme', 'monochrome')
+    root.style.setProperty('--mark-accent-primary',   fallbackTheme.tokens.accentPrimary)
+    root.style.setProperty('--mark-accent-secondary', fallbackTheme.tokens.accentSecondary)
+    root.style.setProperty('--mark-accent-glow',      fallbackTheme.tokens.accentGlow)
+    root.style.setProperty('--mark-accent-subtle',    fallbackTheme.tokens.accentSubtle)
+    
+    return 'monochrome'
+  }
+  
+  // Apply the requested theme if it's live
   const root = document.documentElement
 
   root.setAttribute('data-theme', id)
@@ -285,6 +325,8 @@ export const applyTheme = (id: ThemeId): void => {
   root.style.setProperty('--mark-accent-secondary', theme.tokens.accentSecondary)
   root.style.setProperty('--mark-accent-glow',      theme.tokens.accentGlow)
   root.style.setProperty('--mark-accent-subtle',    theme.tokens.accentSubtle)
+  
+  return id
 }
 
 export const defaultTheme: ThemeId = 'monochrome'
