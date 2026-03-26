@@ -304,7 +304,6 @@ export const applyTheme = (id: ThemeId): ThemeId => {
   
   // If theme is not live, fallback to monochrome
   if (theme.status !== 'live') {
-    console.warn(`Theme "${id}" is not live, falling back to monochrome`)
     const fallbackTheme = getTheme('monochrome')
     const root = document.documentElement
 

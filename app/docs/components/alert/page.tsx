@@ -1,73 +1,147 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Alert from '@mark-ui/components/feedback/Alert/Alert'
+import { useState } from "react";
+import ComponentDocTemplate from "@/components/docs/ComponentDocTemplate";
+import { Alert } from "@/packages/core";
 
-const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
-const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const } } }
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
-  return <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}><h2 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'var(--mark-text-sm)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--mark-fg)', opacity: 0.4, marginBottom: '24px' }}>{label}</h2>{children}</motion.div>
-}
-function PropsTable({ rows }: { rows: [string, string, string, string][] }) {
-  return <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)' }}><thead><tr style={{ borderBottom: '1px solid var(--mark-border-strong)' }}>{['Prop','Type','Default','Description'].map(h=><th key={h} style={{ textAlign:'left', padding:'8px 12px', color:'var(--mark-fg-muted)', fontWeight:600 }}>{h}</th>)}</tr></thead><tbody>{rows.map(([p,t,d,desc])=><tr key={p} style={{ borderBottom:'1px solid var(--mark-border)' }}><td style={{ padding:'8px 12px', color:'var(--mark-accent-primary)', fontFamily:'var(--mark-font-code)' }}>{p}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg-muted)', fontFamily:'var(--mark-font-code)' }}>{t}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg-subtle)', fontFamily:'var(--mark-font-code)' }}>{d}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg)' }}>{desc}</td></tr>)}</tbody></table></div>
-}
+export default function AlertDocPage() {
+  const [variant, setVariant] = useState<"info" | "success" | "warning" | "error" | "accent">("info");
+  const [isDismissible, setIsDismissible] = useState(false);
+  const [showIcon, setShowIcon] = useState(true);
+  const [showTitle, setShowTitle] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
-export default function AlertDoc() {
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 24px' }}>
-      <motion.div variants={containerVariants} initial="hidden" animate="show">
-        <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-          <span style={{ display: 'inline-flex', fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: 'var(--mark-radius-pill)', background: 'var(--mark-accent-glow)', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-display)', marginBottom: '16px' }}>Component</span>
-          <h1 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'clamp(36px, 5vw, 48px)', fontWeight: 800, color: 'var(--mark-fg)', margin: '0 0 12px' }}>Alert</h1>
-          <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-lg)', color: 'var(--mark-fg-muted)', lineHeight: 1.6, maxWidth: '640px', margin: 0 }}>Inline feedback messages for info, warning, and tip callout boxes.</p>
-        </motion.div>
+    <ComponentDocTemplate
+      name="Alert"
+      category="Feedback"
+      description="Inline feedback messages for communicating status, warnings, or important information in context. Dismisses with a smooth height-collapse animation."
+    >
+      {/* PREVIEW */}
+      <h3 id="preview" className="doc-section-label">PREVIEW</h3>
+      <div className="doc-preview-stage">
+        <div style={{ width: "100%", maxWidth: 500, minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {isVisible ? (
+            <Alert
+              variant={variant}
+              isDismissible={isDismissible}
+              onDismiss={() => setIsVisible(false)}
+              showIcon={showIcon}
+              title={showTitle ? "System Update Available" : undefined}
+            >
+              Please refresh the page to apply the latest security patches.
+            </Alert>
+          ) : (
+            <button 
+              onClick={() => setIsVisible(true)}
+              style={{ padding: "8px 16px", background: "var(--mark-border)", color: "var(--mark-fg)", border: "none", borderRadius: 4, cursor: "pointer", fontSize: 14 }}
+            >
+              Reset Alert
+            </button>
+          )}
+        </div>
+      </div>
 
-        <Section label="All Variants">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <Alert variant="info" title="Information">This is an informational alert message.</Alert>
-            <Alert variant="success" title="Success">Operation completed successfully.</Alert>
-            <Alert variant="warning" title="Warning">Please review before proceeding.</Alert>
-            <Alert variant="error" title="Error">Something went wrong.</Alert>
-            <Alert variant="accent" title="Accent">This uses theme accent colors.</Alert>
+      {/* PLAYGROUND */}
+      <h3 id="playground" className="doc-section-label">PLAYGROUND</h3>
+      <div className="doc-playground-panel">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+          
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Variant</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={variant} onChange={(e) => setVariant(e.target.value as any)}>
+              <option value="info">info</option>
+              <option value="success">success</option>
+              <option value="warning">warning</option>
+              <option value="error">error</option>
+              <option value="accent">accent</option>
+            </select>
           </div>
-        </Section>
 
-        <Section label="Without Title">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <Alert variant="info">A simple informational message without a title.</Alert>
-            <Alert variant="success">Your changes have been saved.</Alert>
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Options</label>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={isDismissible} onChange={(e) => setIsDismissible(e.target.checked)} /> isDismissible</label>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={showIcon} onChange={(e) => setShowIcon(e.target.checked)} /> showIcon</label>
+            </div>
           </div>
-        </Section>
 
-        <Section label="Dismissible (click ✕)">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <Alert variant="info" title="Dismissible" isDismissible>Click the ✕ to dismiss this alert.</Alert>
-            <Alert variant="warning" isDismissible>This warning can be dismissed.</Alert>
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Content</label>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={showTitle} onChange={(e) => setShowTitle(e.target.checked)} /> show title</label>
+            </div>
           </div>
-        </Section>
 
-        <Section label="Custom Icon">
-          <Alert variant="accent" title="Custom" icon="🚀">Using a custom icon instead of the default.</Alert>
-        </Section>
+        </div>
+      </div>
 
-        <Section label="Props"><PropsTable rows={[
-          ['variant',"'info'|'success'|'warning'|'error'|'accent'","'info'",'Visual style'],
-          ['title','string','—','Bold title line'],
-          ['isDismissible','boolean','false','Show dismiss button'],
-          ['onDismiss','() => void','—','Dismiss callback'],
-          ['icon','ReactNode','—','Custom icon override'],
-          ['showIcon','boolean','true','Show default icon'],
-          ['children','ReactNode','—','Alert body content'],
-          ['className','string',"''",'Additional CSS class'],
-        ]} /></Section>
+      {/* VARIANTS */}
+      <h3 id="variants" className="doc-section-label">VARIANTS</h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 48, maxWidth: 600 }}>
+        <Alert variant="info" title="Information">This is an informational alert.</Alert>
+        <Alert variant="success" title="Success">Your changes have been saved.</Alert>
+        <Alert variant="warning" title="Warning">Your password expires in 3 days.</Alert>
+        <Alert variant="error" title="Error">Failed to connect to the database.</Alert>
+        <Alert variant="accent" title="New Feature">Check out our new dark mode.</Alert>
+        <Alert variant="info" isDismissible title="Dismissible">This alert can be closed.</Alert>
+        <Alert variant="info" icon={<span style={{fontSize: 20}}>🚀</span>}>Alert with custom icon override.</Alert>
+      </div>
 
-        <Section label="Animation Details">
-          <div style={{ background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-md)', padding: '16px', fontFamily: 'var(--mark-font-code)', fontSize: '13px', color: 'var(--mark-fg)', lineHeight: 1.7 }}>
-            <p style={{ margin: '0 0 8px' }}>Mount: height(0→auto) + opacity(0→1) · --mark-duration-normal · --mark-ease-smooth</p>
-            <p style={{ margin: 0 }}>Dismiss: height(auto→0) + opacity(1→0) · --mark-duration-normal · --mark-ease-snappy · AnimatePresence</p>
-          </div>
-        </Section>
-      </motion.div>
-    </div>
-  )
+      {/* USAGE */}
+      <h3 id="usage" className="doc-section-label">USAGE GUIDELINES</h3>
+      <div className="usage-columns">
+        <div className="usage-col usage-do">
+          <h4>Do</h4>
+          <ul className="usage-list">
+            <li>Use Alert directly after the action that caused it — placement in context matters.</li>
+            <li>Use title when the alert needs a headline and body copy.</li>
+            <li>Use accent variant for theme-specific callouts that should feel part of the brand.</li>
+          </ul>
+        </div>
+        <div className="usage-col usage-dont">
+          <h4>Don&apos;t</h4>
+          <ul className="usage-list">
+            <li>Don&apos;t use Alert for errors that belong in a form field — use Input errorMessage.</li>
+            <li>Don&apos;t stack multiple Alerts of the same type — consolidate into one.</li>
+            <li>Don&apos;t use Alert for transient feedback — use Toast instead.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* ACCESSIBILITY */}
+      <h3 id="accessibility" className="doc-section-label">ACCESSIBILITY</h3>
+      <ul style={{ color: "var(--mark-fg)", opacity: 0.8, lineHeight: 1.7, fontSize: 15, marginBottom: 48 }}>
+        <li><strong>ARIA:</strong> <code>role="alert"</code> announces to screen readers immediately on mount.</li>
+        <li><strong>Dismiss:</strong> <code>aria-label="Close alert"</code> on button.</li>
+        <li><strong>Live region:</strong> content changes within the Alert are announced automatically.</li>
+      </ul>
+
+      {/* PROPS */}
+      <h3 id="props" className="doc-section-label">PROPS</h3>
+      <div className="doc-table-wrapper">
+        <table className="doc-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>'info'|'success'|'warning'|'error'|'accent'</code></td><td><code>'info'</code></td><td>Visual style</td></tr>
+            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td><td>Bold heading above body</td></tr>
+            <tr><td><code>isDismissible</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows close button</td></tr>
+            <tr><td><code>onDismiss</code></td><td><code>function</code></td><td>—</td><td>Called on close</td></tr>
+            <tr><td><code>showIcon</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Shows variant icon</td></tr>
+            <tr><td><code>icon</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Custom icon override</td></tr>
+            <tr><td><code>children*</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Alert body content</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* IMPORT */}
+      <h3 id="import" className="doc-section-label">IMPORT</h3>
+      <div className="doc-code-block" style={{ marginBottom: 0 }}>
+        <pre><code>import {"{"} Alert {"}"} from '@markui/core'</code></pre>
+      </div>
+
+    </ComponentDocTemplate>
+  );
 }

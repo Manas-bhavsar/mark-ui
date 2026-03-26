@@ -11,9 +11,8 @@ const navLinks = [
 ];
 
 const connectLinks = [
-  { href: "https://github.com", label: "GitHub", external: true },
-  { href: "https://linkedin.com", label: "LinkedIn", external: true },
-  { href: "mailto:hello@markui.dev", label: "Email", external: true },
+  { href: "https://github.com/Manas-bhavsar", label: "GitHub", external: true },
+  { href: "mailto:manas.bhavsar45@gmail.com", label: "Email", external: true },
 ];
 
 export default function Footer() {

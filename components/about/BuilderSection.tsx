@@ -42,9 +42,11 @@ export default function BuilderSection() {
         <div className="builder-avatar-column">
           <div className="builder-avatar-wrap">
             <Avatar
+              initials="MB"
               alt="Manas Bhavsar"
               shape="circle"
               status="online"
+              size="xl"
             />
           </div>
         </div>

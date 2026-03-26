@@ -1,144 +1,153 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import Button from '@mark-ui/components/inputs/Button/Button'
+import { useState } from "react";
+import ComponentDocTemplate from "@/components/docs/ComponentDocTemplate";
+import { Button } from "@/packages/core";
 
-const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
-const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const } } }
-
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-      <h2 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'var(--mark-text-sm)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--mark-fg)', opacity: 0.4, marginBottom: '24px' }}>{label}</h2>
-      {children}
-    </motion.div>
-  )
-}
-
-function ShowcaseRow({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>{children}</div>
-}
-
-function PropsTable({ rows }: { rows: [string, string, string, string][] }) {
-  return (
-    <div style={{ overflowX: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)' }}>
-        <thead>
-          <tr style={{ borderBottom: '1px solid var(--mark-border-strong)' }}>
-            {['Prop', 'Type', 'Default', 'Description'].map(h => (
-              <th key={h} style={{ textAlign: 'left', padding: '8px 12px', color: 'var(--mark-fg-muted)', fontWeight: 600 }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(([prop, type, def, desc]) => (
-            <tr key={prop} style={{ borderBottom: '1px solid var(--mark-border)' }}>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-code)' }}>{prop}</td>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-fg-muted)', fontFamily: 'var(--mark-font-code)' }}>{type}</td>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-fg-subtle)', fontFamily: 'var(--mark-font-code)' }}>{def}</td>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-fg)' }}>{desc}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-export default function ButtonDoc() {
-  const [loading, setLoading] = useState(false)
+export default function ButtonDocPage() {
+  const [variant, setVariant] = useState<"primary" | "secondary" | "ghost" | "destructive">("primary");
+  const [size, setSize] = useState<"sm" | "md" | "lg">("md");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [fullWidth, setFullWidth] = useState(false);
 
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 24px' }}>
-      <motion.div variants={containerVariants} initial="hidden" animate="show">
-        {/* Header */}
-        <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: 'var(--mark-radius-pill)', background: 'var(--mark-accent-glow)', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-display)', marginBottom: '16px' }}>Component</span>
-          <h1 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'clamp(36px, 5vw, 48px)', fontWeight: 800, color: 'var(--mark-fg)', margin: '0 0 12px' }}>Button</h1>
-          <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-lg)', color: 'var(--mark-fg-muted)', lineHeight: 1.6, maxWidth: '640px', margin: 0 }}>
-            The primary action element. Available in four variants, three sizes, and a loading state that locks dimensions.
-          </p>
-        </motion.div>
+    <ComponentDocTemplate
+      name="Button"
+      category="Inputs"
+      description="The primary action element. Triggers events, submits forms, and initiates navigation. Available in four variants and three sizes with a built-in loading state."
+    >
+      {/* PREVIEW */}
+      <h3 id="preview" className="doc-section-label">PREVIEW</h3>
+      <div className="doc-preview-stage">
+        <Button
+          variant={variant}
+          size={size}
+          isLoading={isLoading}
+          isDisabled={isDisabled}
+          fullWidth={fullWidth}
+        >
+          Leave a mark
+        </Button>
+      </div>
 
-        {/* All variants × sizes */}
-        <Section label="Variants × Sizes">
-          {(['primary', 'secondary', 'ghost', 'destructive'] as const).map(v => (
-            <div key={v} style={{ marginBottom: '16px' }}>
-              <p style={{ fontFamily: 'var(--mark-font-code)', fontSize: '12px', color: 'var(--mark-fg-subtle)', marginBottom: '8px' }}>{v}</p>
-              <ShowcaseRow>
-                <Button variant={v} size="sm">Small</Button>
-                <Button variant={v} size="md">Medium</Button>
-                <Button variant={v} size="lg">Large</Button>
-              </ShowcaseRow>
-            </div>
-          ))}
-        </Section>
-
-        {/* Loading state */}
-        <Section label="Loading State">
-          <ShowcaseRow>
-            <Button variant="primary" isLoading>Submit</Button>
-            <Button variant="secondary" isLoading>Loading</Button>
-            <Button
-              variant="primary"
-              isLoading={loading}
-              onClick={() => { setLoading(true); setTimeout(() => setLoading(false), 2000) }}
-            >
-              Click to load
-            </Button>
-          </ShowcaseRow>
-        </Section>
-
-        {/* Disabled */}
-        <Section label="Disabled">
-          <ShowcaseRow>
-            <Button variant="primary" isDisabled>Primary</Button>
-            <Button variant="secondary" isDisabled>Secondary</Button>
-            <Button variant="ghost" isDisabled>Ghost</Button>
-            <Button variant="destructive" isDisabled>Destructive</Button>
-          </ShowcaseRow>
-        </Section>
-
-        {/* With icons */}
-        <Section label="With Icons">
-          <ShowcaseRow>
-            <Button variant="primary" leftIcon="→">Navigate</Button>
-            <Button variant="secondary" rightIcon="↗">External</Button>
-            <Button variant="ghost" leftIcon="+" rightIcon="→">Add Item</Button>
-          </ShowcaseRow>
-        </Section>
-
-        {/* Full width */}
-        <Section label="Full Width">
-          <Button variant="primary" fullWidth>Full Width Button</Button>
-        </Section>
-
-        {/* Props table */}
-        <Section label="Props">
-          <PropsTable rows={[
-            ['variant', "'primary' | 'secondary' | 'ghost' | 'destructive'", "'primary'", 'Visual style'],
-            ['size', "'sm' | 'md' | 'lg'", "'md'", 'Button size'],
-            ['isLoading', 'boolean', 'false', 'Show spinner, disable interaction'],
-            ['isDisabled', 'boolean', 'false', 'Disable the button'],
-            ['leftIcon', 'ReactNode', '—', 'Icon before label'],
-            ['rightIcon', 'ReactNode', '—', 'Icon after label'],
-            ['fullWidth', 'boolean', 'false', 'Stretch to fill container'],
-            ['onClick', '() => void', '—', 'Click handler'],
-            ['children', 'ReactNode', '—', 'Button content'],
-            ['className', 'string', "''", 'Additional CSS class'],
-          ]} />
-        </Section>
-
-        {/* Animation details */}
-        <Section label="Animation Details">
-          <div style={{ background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-md)', padding: '16px', fontFamily: 'var(--mark-font-code)', fontSize: '13px', color: 'var(--mark-fg)', lineHeight: 1.7 }}>
-            <p style={{ margin: '0 0 8px' }}>Hover: translateY(-1px) · duration: --mark-duration-fast · ease: --mark-ease-smooth</p>
-            <p style={{ margin: '0 0 8px' }}>Click: scale(0.97) · duration: --mark-duration-fast · ease: --mark-ease-bounce</p>
-            <p style={{ margin: 0 }}>Loading spinner fades in with --mark-duration-normal</p>
+      {/* PLAYGROUND */}
+      <h3 id="playground" className="doc-section-label">PLAYGROUND</h3>
+      <div className="doc-playground-panel">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+          
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Variant</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={variant} onChange={(e) => setVariant(e.target.value as any)}>
+              <option value="primary">primary</option>
+              <option value="secondary">secondary</option>
+              <option value="ghost">ghost</option>
+              <option value="destructive">destructive</option>
+            </select>
           </div>
-        </Section>
-      </motion.div>
-    </div>
-  )
+
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Size</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={size} onChange={(e) => setSize(e.target.value as any)}>
+              <option value="sm">sm</option>
+              <option value="md">md</option>
+              <option value="lg">lg</option>
+            </select>
+          </div>
+
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Boolean Props</label>
+            <div style={{ display: "flex", gap: 16 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}>
+                <input type="checkbox" checked={isLoading} onChange={(e) => setIsLoading(e.target.checked)} />
+                isLoading
+              </label>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}>
+                <input type="checkbox" checked={isDisabled} onChange={(e) => setIsDisabled(e.target.checked)} />
+                isDisabled
+              </label>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}>
+                <input type="checkbox" checked={fullWidth} onChange={(e) => setFullWidth(e.target.checked)} />
+                fullWidth
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* VARIANTS */}
+      <h3 id="variants" className="doc-section-label">VARIANTS</h3>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 32, marginBottom: 48 }}>
+        {["primary", "secondary", "ghost", "destructive"].map((v) => (
+          <div key={v} style={{ textAlign: "center" }}>
+            <Button variant={v as any}>Button</Button>
+            <div style={{ marginTop: 12, fontSize: 13, color: "var(--mark-fg)", opacity: 0.5 }}>{v}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* USAGE */}
+      <h3 id="usage" className="doc-section-label">USAGE GUIDELINES</h3>
+      <div className="usage-columns">
+        <div className="usage-col usage-do">
+          <h4>Do</h4>
+          <ul className="usage-list">
+            <li>Use primary for the single most important action on a page or section.</li>
+            <li>Use ghost for low-priority or repetitive actions.</li>
+            <li>Use destructive only for irreversible actions like delete or remove.</li>
+            <li>Keep button labels short — 1 to 3 words.</li>
+          </ul>
+        </div>
+        <div className="usage-col usage-dont">
+          <h4>Don&apos;t</h4>
+          <ul className="usage-list">
+            <li>Don&apos;t use more than one primary button in the same visual section.</li>
+            <li>Don&apos;t use buttons for navigation — use a link instead.</li>
+            <li>Don&apos;t disable buttons without explaining why elsewhere on the page.</li>
+            <li>Don&apos;t use destructive variant for anything that can be undone.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* ACCESSIBILITY */}
+      <h3 id="accessibility" className="doc-section-label">ACCESSIBILITY</h3>
+      <ul style={{ color: "var(--mark-fg)", opacity: 0.8, lineHeight: 1.7, fontSize: 15, marginBottom: 48 }}>
+        <li><strong>Keyboard:</strong> Space and Enter activate the button.</li>
+        <li><strong>Focus:</strong> Visible focus ring using accent color.</li>
+        <li><strong>Loading state:</strong> <code>aria-busy="true"</code> when loading, screen readers announce "loading".</li>
+        <li><strong>Disabled:</strong> <code>aria-disabled="true"</code>, not focusable when disabled.</li>
+        <li><strong>Icon-only buttons:</strong> must have <code>aria-label</code>.</li>
+      </ul>
+
+      {/* PROPS */}
+      <h3 id="props" className="doc-section-label">PROPS</h3>
+      <div className="doc-table-wrapper">
+        <table className="doc-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>'primary' | 'secondary' | 'ghost' | 'destructive'</code></td><td><code>'primary'</code></td><td>Visual style of the button</td></tr>
+            <tr><td><code>size</code></td><td><code>'sm' | 'md' | 'lg'</code></td><td><code>'md'</code></td><td>Size of the button</td></tr>
+            <tr><td><code>isLoading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows spinner, locks dimensions</td></tr>
+            <tr><td><code>isDisabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Prevents interaction</td></tr>
+            <tr><td><code>fullWidth</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Stretches to container width</td></tr>
+            <tr><td><code>leftIcon</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Icon before label</td></tr>
+            <tr><td><code>rightIcon</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Icon after label</td></tr>
+            <tr><td><code>onClick</code></td><td><code>() =&gt; void</code></td><td>—</td><td>Click handler</td></tr>
+            <tr><td><code>children*</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Button label content</td></tr>
+            <tr><td><code>className</code></td><td><code>string</code></td><td>—</td><td>Additional CSS classes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* IMPORT */}
+      <h3 id="import" className="doc-section-label">IMPORT</h3>
+      <div className="doc-code-block" style={{ marginBottom: 0 }}>
+        <pre><code>import {"{"} Button {"}"} from '@markui/core'</code></pre>
+      </div>
+
+    </ComponentDocTemplate>
+  );
 }

@@ -1,8 +1,85 @@
 /* ═══════════════════════════════════════════
-   MARK UI — Themes Page Styles
+   MARK UI — Themes Showroom Styles
    ═══════════════════════════════════════════ */
 
-/* ── Theme Card Grid ── */
+.themes-page {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* ── Hero Section ── */
+.themes-hero {
+  padding: 96px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.themes-hero-tag {
+  font-family: var(--mark-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--mark-accent-primary);
+  background: var(--mark-accent-subtle);
+  padding: 6px 16px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.themes-hero-title {
+  font-family: var(--mark-font-display);
+  font-weight: 800;
+  font-size: clamp(48px, 8vw, 84px);
+  color: var(--mark-fg);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+  white-space: pre-line;
+}
+
+.themes-hero-body {
+  font-family: var(--mark-font-body);
+  font-size: clamp(18px, 2vw, 22px);
+  color: var(--mark-fg);
+  opacity: 0.7;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Collection Grid ── */
+.themes-collection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+.themes-collection-label {
+  font-family: var(--mark-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--mark-accent-primary);
+  margin-bottom: 12px;
+}
+
+.themes-collection-desc {
+  font-family: var(--mark-font-body);
+  font-size: 18px;
+  color: var(--mark-fg);
+  opacity: 0.6;
+  max-width: 600px;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
 
 .themes-grid {
   display: grid;
@@ -11,323 +88,264 @@
 }
 
 @media (max-width: 1024px) {
-  .themes-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .themes-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 640px) {
-  .themes-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 768px) {
+  .themes-grid { grid-template-columns: 1fr; }
 }
 
 /* ── Theme Card ── */
-
 .theme-card {
-  height: 280px;
+  border: 1px solid var(--mark-border-strong);
   border-radius: var(--mark-radius-xl);
   overflow: hidden;
-  border: 1px solid var(--mark-border);
+  height: 380px;
   display: flex;
   flex-direction: column;
-  transition: all var(--mark-duration-normal) var(--mark-ease-smooth);
+  transition: all var(--mark-duration-normal) var(--mark-ease-bounce);
+  background: var(--mark-bg-surface);
   cursor: default;
 }
 
-.theme-card.is-live {
-  cursor: pointer;
+.theme-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--mark-accent-primary);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
-.theme-card.is-live:hover {
-  transform: scale(1.03);
-}
-
-.theme-card.is-planned {
-  filter: saturate(0.5);
-  opacity: 0.7;
-}
-
-/* Top preview area */
 .theme-card-preview {
-  flex: 0 0 60%;
-  padding: 20px;
+  height: 55%;
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--mark-border-strong);
 }
 
-/* Bottom info area */
-.theme-card-info {
-  flex: 0 0 40%;
-  padding: 16px 20px;
+/* Background grid for previews */
+.theme-card-preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--mark-border-strong) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.theme-card-mini-ui {
+  position: relative;
+  z-index: 10;
+  padding: 24px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  transform: scale(0.85); /* zoom out slightly to fit components */
+}
+
+.theme-card-mini-ui-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
   justify-content: center;
-  gap: 8px;
+  width: 100%;
+}
+
+.theme-card-content {
+  height: 45%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .theme-card-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
-.theme-card-name {
+.theme-card-title {
   font-family: var(--mark-font-display);
-  font-weight: 700;
-  font-size: 16px;
-  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--mark-fg);
+  margin: 0 0 4px;
 }
 
 .theme-card-personality {
   font-family: var(--mark-font-body);
   font-size: 13px;
-  opacity: 0.55;
+  color: var(--mark-fg);
+  opacity: 0.6;
   margin: 0;
-  line-height: 1.4;
+}
+
+.theme-card-swatches {
+  display: flex;
+  gap: 8px;
+}
+
+.theme-card-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .theme-card-footer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-top: auto;
+  align-items: center;
+  margin-top: 16px;
 }
 
-.theme-card-dots {
-  display: flex;
-  gap: 6px;
+/* ── "How it works" Section ── */
+.themes-how-it-works {
+  background: var(--mark-bg-surface);
+  padding: 96px 24px;
+  border-top: 1px solid var(--mark-border);
+  border-bottom: 1px solid var(--mark-border);
 }
 
-.theme-card-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* Preview button (live themes) */
-.theme-card-preview-btn {
+.themes-how-title {
   font-family: var(--mark-font-display);
-  font-weight: 600;
-  font-size: 12px;
-  padding: 5px 14px;
-  border-radius: var(--mark-radius-pill);
-  border: none;
-  cursor: pointer;
-  transition: all var(--mark-duration-fast) var(--mark-ease-smooth);
+  font-weight: 800;
+  font-size: 36px;
+  text-align: center;
+  color: var(--mark-fg);
+  margin-bottom: 64px;
 }
 
-.theme-card-preview-btn:hover {
-  transform: scale(1.06);
-}
-
-/* Coming soon pill */
-.theme-card-soon-pill {
-  font-family: var(--mark-font-display);
-  font-weight: 600;
-  font-size: 11px;
-  padding: 4px 12px;
-  border-radius: var(--mark-radius-pill);
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
-  border: none;
-}
-
-/* ── Mini preview components ── */
-
-.tp-btn {
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-family: var(--mark-font-display);
-  font-weight: 600;
-  font-size: 11px;
-  border: none;
-  cursor: default;
-}
-
-.tp-badge {
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-family: var(--mark-font-display);
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.tp-toggle {
-  position: relative;
-  width: 34px;
-  height: 18px;
-  border-radius: 9999px;
-  border: none;
-  cursor: default;
-}
-
-.tp-toggle-knob {
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.tp-input {
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-family: var(--mark-font-body);
-  font-size: 11px;
-  border: 1px solid;
-  outline: none;
-  max-width: 130px;
-  cursor: default;
-}
-
-/* ── How It Works ── */
-
-.steps-row {
-  display: flex;
+.themes-steps {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
-  align-items: flex-start;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 768px) {
-  .steps-row {
-    flex-direction: column;
-    gap: 40px;
-    overflow-x: visible;
-  }
+  .themes-steps { grid-template-columns: 1fr; }
 }
 
-/* Improve tablet layout */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .steps-row {
-    gap: 24px;
-  }
-  
-  .step-code {
-    font-size: 12px;
-  }
-}
-
-.step-card {
-  flex: 1;
-  position: relative;
-  min-width: 0;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-/* Improve mobile step layout */
-@media (max-width: 768px) {
-  .step-card {
-    max-width: none;
-    overflow: visible;
-  }
-}
-
-.step-number {
+.theme-step-num {
   font-family: var(--mark-font-display);
-  font-weight: 700;
-  font-size: 40px;
+  font-size: 14px;
+  font-weight: 800;
   color: var(--mark-accent-primary);
-  margin: 0 0 12px;
-  line-height: 1;
-  transition: color var(--mark-duration-normal) var(--mark-ease-smooth);
+  margin-bottom: 16px;
 }
 
-.step-title {
+.theme-step-title {
   font-family: var(--mark-font-display);
-  font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--mark-fg);
   margin: 0 0 8px;
-  transition: color var(--mark-duration-normal) var(--mark-ease-smooth);
 }
 
-.step-body {
+.theme-step-body {
   font-family: var(--mark-font-body);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--mark-fg);
-  opacity: 0.55;
-  margin: 0 0 16px;
+  opacity: 0.7;
   line-height: 1.5;
-  transition: color var(--mark-duration-normal) var(--mark-ease-smooth);
+  margin: 0 0 16px;
 }
 
-.step-code {
+.theme-step-code {
   background: var(--mark-bg-elevated);
   border: 1px solid var(--mark-border);
   border-radius: var(--mark-radius-md);
-  padding: 14px 16px;
+  padding: 12px;
   font-family: var(--mark-font-code);
-  font-size: 13px;
-  color: var(--mark-fg);
-  white-space: pre;
-  overflow-x: auto;
-  line-height: 1.6;
-  transition: all var(--mark-duration-normal) var(--mark-ease-smooth);
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  max-width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* Improve mobile code display */
-@media (max-width: 768px) {
-  .step-code {
-    font-size: 12px;
-    padding: 12px 14px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* Step arrows (desktop only) */
-.step-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 24px;
-  color: var(--mark-fg);
-  opacity: 0.2;
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
-@media (max-width: 768px) {
-  .step-arrow {
-    display: none;
-  }
-}
-
-/* ── Collection description ── */
-
-.collection-description {
-  font-family: var(--mark-font-body);
-  font-size: clamp(16px, 2vw, 18px);
-  color: var(--mark-fg);
-  opacity: 0.55;
-  line-height: 1.65;
-  margin: 0 0 40px;
-  max-width: 560px;
-  transition: color var(--mark-duration-normal) var(--mark-ease-smooth);
-}
-
-.collection-section-heading {
-  font-family: var(--mark-font-display);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: 12px;
   color: var(--mark-accent-primary);
+  opacity: 0.9;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── Upcoming Themes ── */
+.themes-upcoming {
+  padding: 96px 24px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.themes-upcoming-title {
+  font-family: var(--mark-font-display);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--mark-fg);
   margin-bottom: 16px;
-  transition: color var(--mark-duration-normal) var(--mark-ease-smooth);
+}
+
+.themes-upcoming-body {
+  font-family: var(--mark-font-body);
+  font-size: 18px;
+  color: var(--mark-fg);
+  opacity: 0.6;
+  margin-bottom: 48px;
+}
+
+.themes-upcoming-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.themes-upcoming-tag {
+  background: var(--mark-bg-elevated);
+  border: 1px solid var(--mark-border);
+  color: var(--mark-fg);
+  opacity: 0.4;
+  font-family: var(--mark-font-body);
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  cursor: default;
+}
+
+/* ── CTA Section ── */
+.themes-cta {
+  background: var(--mark-bg-surface);
+  border-top: 1px solid var(--mark-border);
+  padding: 96px 24px;
+  text-align: center;
+}
+
+.themes-cta-title {
+  font-family: var(--mark-font-display);
+  font-weight: 800;
+  font-size: 48px;
+  color: var(--mark-fg);
+  margin-bottom: 24px;
+}
+
+.themes-cta-body {
+  font-family: var(--mark-font-body);
+  font-size: 20px;
+  color: var(--mark-fg);
+  opacity: 0.7;
+  max-width: 500px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+}
+
+.themes-cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .themes-cta-actions { flex-direction: column; }
 }

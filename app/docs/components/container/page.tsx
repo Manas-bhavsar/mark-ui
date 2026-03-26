@@ -1,50 +1,100 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Container from '@mark-ui/components/layout/Container/Container'
+import { useState } from "react";
+import ComponentDocTemplate from "@/components/docs/ComponentDocTemplate";
+import { Container } from "@/packages/core";
 
-const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
-const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const } } }
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
-  return <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}><h2 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'var(--mark-text-sm)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--mark-fg)', opacity: 0.4, marginBottom: '24px' }}>{label}</h2>{children}</motion.div>
-}
-function PropsTable({ rows }: { rows: [string, string, string, string][] }) {
-  return <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)' }}><thead><tr style={{ borderBottom: '1px solid var(--mark-border-strong)' }}>{['Prop','Type','Default','Description'].map(h=><th key={h} style={{ textAlign:'left', padding:'8px 12px', color:'var(--mark-fg-muted)', fontWeight:600 }}>{h}</th>)}</tr></thead><tbody>{rows.map(([p,t,d,desc])=><tr key={p} style={{ borderBottom:'1px solid var(--mark-border)' }}><td style={{ padding:'8px 12px', color:'var(--mark-accent-primary)', fontFamily:'var(--mark-font-code)' }}>{p}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg-muted)', fontFamily:'var(--mark-font-code)' }}>{t}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg-subtle)', fontFamily:'var(--mark-font-code)' }}>{d}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg)' }}>{desc}</td></tr>)}</tbody></table></div>
-}
+export default function ContainerDocPage() {
+  const [size, setSize] = useState<"sm" | "md" | "lg" | "xl" | "full">("md");
 
-const sizes = ['sm', 'md', 'lg', 'xl', 'full'] as const
-const widths = { sm: '640px', md: '768px', lg: '1024px', xl: '1200px', full: '100%' }
-
-export default function ContainerDoc() {
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 24px' }}>
-      <motion.div variants={containerVariants} initial="hidden" animate="show">
-        <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-          <span style={{ display: 'inline-flex', fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: 'var(--mark-radius-pill)', background: 'var(--mark-accent-glow)', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-display)', marginBottom: '16px' }}>Component</span>
-          <h1 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'clamp(36px, 5vw, 48px)', fontWeight: 800, color: 'var(--mark-fg)', margin: '0 0 12px' }}>Container</h1>
-          <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-lg)', color: 'var(--mark-fg-muted)', lineHeight: 1.6, maxWidth: '640px', margin: 0 }}>Layout utility controlling max-width and horizontal centering.</p>
-        </motion.div>
-
-        <Section label="All Size Variants">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {sizes.map(s => (
-              <Container key={s} size={s}>
-                <div style={{ border: '2px dashed var(--mark-border)', borderRadius: 'var(--mark-radius-md)', padding: '12px 16px', textAlign: 'center' }}>
-                  <span style={{ fontFamily: 'var(--mark-font-code)', fontSize: '13px', color: 'var(--mark-fg-muted)' }}>{s} — max-width: {widths[s]}</span>
-                </div>
-              </Container>
-            ))}
+    <ComponentDocTemplate
+      name="Container"
+      category="Layout"
+      description="Wraps page content to constrain maximum width and globally center it. Responsive padding is built-in."
+    >
+      {/* PREVIEW */}
+      <h3 id="preview" className="doc-section-label">PREVIEW</h3>
+      <div className="doc-preview-stage" style={{ background: "var(--mark-bg-canvas)", padding: 0 }}>
+        <Container size={size}>
+          <div style={{ width: "100%", height: 300, background: "var(--mark-bg)", border: "1px dashed var(--mark-border-strong)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--mark-fg)", fontWeight: 500 }}>
+            {size.toUpperCase()} Container
           </div>
-        </Section>
+        </Container>
+      </div>
 
-        <Section label="Props"><PropsTable rows={[
-          ['size',"'sm'|'md'|'lg'|'xl'|'full'","'xl'",'Maximum width'],
-          ['centered','boolean','true','Center with auto margins'],
-          ['padding','boolean','true','Add horizontal padding'],
-          ['children','ReactNode','—','Container content'],
-          ['className','string',"''",'Additional CSS class'],
-        ]} /></Section>
-      </motion.div>
-    </div>
+      {/* PLAYGROUND */}
+      <h3 id="playground" className="doc-section-label">PLAYGROUND</h3>
+      <div className="doc-playground-panel">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+          
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Maximum Width Size</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={size} onChange={(e) => setSize(e.target.value as any)}>
+              <option value="sm">sm (640px)</option>
+              <option value="md">md (768px - default)</option>
+              <option value="lg">lg (1024px)</option>
+              <option value="xl">xl (1280px)</option>
+              <option value="full">full (100%)</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      {/* USAGE */}
+      <h3 id="usage" className="doc-section-label">USAGE GUIDELINES</h3>
+      <div className="usage-columns">
+        <div className="usage-col usage-do">
+          <h4>Do</h4>
+          <ul className="usage-list">
+            <li>Use Container as the top-level wrapper for page content.</li>
+            <li>Use <code>sm</code> or <code>md</code> for text-heavy focus views (like articles or settings forms).</li>
+            <li>Use <code>xl</code> for complex dashboards or grid layouts.</li>
+          </ul>
+        </div>
+        <div className="usage-col usage-dont">
+          <h4>Don&apos;t</h4>
+          <ul className="usage-list">
+            <li>Don&apos;t nest multiple Containers inside each other — it messes up the responsive padding.</li>
+            <li>Don&apos;t attempt to override the max-width with CSS classes on the Container — use the size prop.</li>
+            <li>Don&apos;t put full-bleed elements (like a top navbar) inside a Container. Wrap the content *below* the navbar instead.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* PROPS */}
+      <h3 id="props" className="doc-section-label">PROPS</h3>
+      <div className="doc-table-wrapper">
+        <table className="doc-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>size</code></td><td><code>'sm'|'md'|'lg'|'xl'|'full'</code></td><td><code>'md'</code></td><td>Max-width constraint</td></tr>
+            <tr><td><code>as</code></td><td><code>string</code></td><td><code>'div'</code></td><td>HTML element to render as (e.g. 'main', 'section')</td></tr>
+            <tr><td><code>children*</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Constrained content</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* IMPORT */}
+      <h3 id="import" className="doc-section-label">IMPORT</h3>
+      <div className="doc-code-block" style={{ marginBottom: 0 }}>
+        <pre><code>{`import { Container } from '@markui/core'
+
+export default function Layout() {
+  return (
+    <main>
+      <Navbar /> {/* Full bleed */}
+      <Container size="lg">
+        {/* Constrained layout */}
+      </Container>
+    </main>
   )
+}`}</code></pre>
+      </div>
+
+    </ComponentDocTemplate>
+  );
 }

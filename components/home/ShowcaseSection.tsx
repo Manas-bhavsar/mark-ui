@@ -2,23 +2,15 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-
-function MiniToggle() {
-  const [on, setOn] = useState(true);
-  return (
-    <button
-      className="mk-toggle"
-      data-on={String(on)}
-      onClick={() => setOn(!on)}
-      aria-label="Toggle"
-      type="button"
-    >
-      <span className="mk-toggle-knob" />
-    </button>
-  );
-}
+import { 
+  Button, Badge, Tag, Input, Toggle, 
+  Card, Spinner, Skeleton 
+} from "@/packages/core";
 
 export default function ShowcaseSection() {
+  const [toggleOn, setToggleOn] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <section className="home-section">
       <div className="home-section-inner">
@@ -65,60 +57,59 @@ export default function ShowcaseSection() {
         >
           {/* Row 1 — Buttons */}
           <div className="showcase-row">
-            <button className="mk-btn mk-btn-primary" type="button">
-              Primary
-            </button>
-            <button className="mk-btn mk-btn-secondary" type="button">
-              Secondary
-            </button>
-            <button className="mk-btn mk-btn-ghost" type="button">
-              Ghost
-            </button>
-            <button className="mk-btn mk-btn-destructive" type="button">
-              Destructive
-            </button>
+            <Button variant="primary">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="destructive">Destructive</Button>
           </div>
 
           {/* Row 2 — Badge + Tag */}
           <div className="showcase-row">
-            <span className="mk-badge">New</span>
-            <span className="mk-badge">v2.0</span>
-            <span className="mk-tag">React</span>
-            <span className="mk-tag">TypeScript</span>
-            <span className="mk-tag">Framer Motion</span>
+            <Badge variant="accent">New</Badge>
+            <Badge variant="info">v2.0</Badge>
+            <Tag>React</Tag>
+            <Tag>TypeScript</Tag>
+            <Tag>Framer Motion</Tag>
           </div>
 
           {/* Row 3 — Input + Toggle */}
           <div className="showcase-row">
-            <input
-              className="mk-input"
-              placeholder="Type something…"
-              type="text"
-              aria-label="Demo input"
-            />
-            <MiniToggle />
+            <div style={{ width: "240px" }}>
+              <Input
+                placeholder="Type something…"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+            </div>
+            <div style={{ transform: "scale(1.2) translateY(2px)" }}>
+              <Toggle checked={toggleOn} onChange={setToggleOn} />
+            </div>
           </div>
 
           {/* Row 4 — Card */}
-          <div className="showcase-row">
-            <div className="mk-card">
-              <h4 className="mk-card-title">Card Title</h4>
-              <p className="mk-card-body">
-                This is a live component. Switch themes and watch every color
-                update instantly.
-              </p>
-              <button className="mk-btn mk-btn-primary" type="button">
-                Action
-              </button>
+          <div className="showcase-row" style={{ width: "100%", maxWidth: "400px" }}>
+            <div style={{ width: "100%" }}>
+              <Card>
+                <div style={{ padding: "20px" }}>
+                  <h4 style={{ fontFamily: "var(--mark-font-display)", fontSize: "18px", fontWeight: "700", marginBottom: "8px", color: "var(--mark-fg)" }}>Card Title</h4>
+                  <p style={{ fontFamily: "var(--mark-font-body)", fontSize: "15px", color: "var(--mark-fg)", opacity: 0.8, marginBottom: "16px", lineHeight: 1.5 }}>
+                    This is a live component. Switch themes and watch every color
+                    update instantly.
+                  </p>
+                  <Button variant="primary" size="sm">
+                    Action
+                  </Button>
+                </div>
+              </Card>
             </div>
           </div>
 
           {/* Row 5 — Spinner + Skeleton */}
-          <div className="showcase-row" style={{ alignItems: "flex-start" }}>
-            <div className="mk-spinner" />
-            <div style={{ flex: 1, maxWidth: 260, display: "flex", flexDirection: "column", gap: 10 }}>
-              <div className="mk-skeleton" style={{ width: "100%" }} />
-              <div className="mk-skeleton" style={{ width: "70%" }} />
+          <div className="showcase-row">
+            <Spinner size="md" />
+            <div style={{ width: 200, display: "flex", flexDirection: "column", gap: 8 }}>
+              <Skeleton className="w-full h-4" />
+              <Skeleton className="w-2/3 h-4" />
             </div>
           </div>
         </motion.div>

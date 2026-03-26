@@ -1,239 +1,145 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Tag } from '@/packages/core'
+import { useState } from "react";
+import ComponentDocTemplate from "@/components/docs/ComponentDocTemplate";
+import { Tag } from "@/packages/core";
 
-const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
-const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const } } }
-
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-      <h2 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'var(--mark-text-sm)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--mark-fg)', opacity: 0.4, marginBottom: '24px' }}>{label}</h2>
-      {children}
-    </motion.div>
-  )
-}
-
-function ShowcaseRow({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>{children}</div>
-}
-
-function PropsTable({ rows }: { rows: [string, string, string, string][] }) {
-  return (
-    <div style={{ overflowX: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)' }}>
-        <thead>
-          <tr style={{ borderBottom: '1px solid var(--mark-border-strong)' }}>
-            {['Prop', 'Type', 'Default', 'Description'].map(h => (
-              <th key={h} style={{ textAlign: 'left', padding: '8px 12px', color: 'var(--mark-fg-muted)', fontWeight: 600 }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(([prop, type, def, desc]) => (
-            <tr key={prop} style={{ borderBottom: '1px solid var(--mark-border)' }}>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-code)' }}>{prop}</td>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-fg-muted)', fontFamily: 'var(--mark-font-code)' }}>{type}</td>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-fg-subtle)', fontFamily: 'var(--mark-font-code)' }}>{def}</td>
-              <td style={{ padding: '8px 12px', color: 'var(--mark-fg)' }}>{desc}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-export default function TagDoc() {
-  const [tags, setTags] = useState(['React', 'TypeScript', 'Design System'])
-
-  const removeTag = (index: number) => {
-    setTags(tags => tags.filter((_, i) => i !== index))
-  }
-
-  const addTag = (tag: string) => {
-    if (!tags.includes(tag)) {
-      setTags(tags => [...tags, tag])
-    }
-  }
+export default function TagDocPage() {
+  const [variant, setVariant] = useState<"default" | "accent" | "success" | "warning" | "error">("default");
+  const [size, setSize] = useState<"sm" | "md">("md");
+  const [isDismissible, setIsDismissible] = useState(false);
+  const [hasLeftIcon, setHasLeftIcon] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 24px' }}>
-      <motion.div variants={containerVariants} initial="hidden" animate="show">
-        {/* Header */}
-        <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: 'var(--mark-radius-pill)', background: 'var(--mark-accent-glow)', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-display)', marginBottom: '16px' }}>Component</span>
-          <h1 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'clamp(36px, 5vw, 48px)', fontWeight: 800, color: 'var(--mark-fg)', margin: '0 0 12px' }}>Tag</h1>
-          <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-lg)', color: 'var(--mark-fg-muted)', lineHeight: 1.6, maxWidth: '640px', margin: 0 }}>
-            Small status and label indicators for categories, metadata, and removable items. Crisp and readable at small sizes.
-          </p>
-        </motion.div>
+    <ComponentDocTemplate
+      name="Tag"
+      category="Display"
+      description="Dismissible label chips for filters, selections, and categories. Animates out cleanly when dismissed and neighboring tags reflow automatically."
+    >
+      {/* PREVIEW */}
+      <h3 id="preview" className="doc-section-label">PREVIEW</h3>
+      <div className="doc-preview-stage">
+        <div style={{ minHeight: 40, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {isVisible ? (
+            <Tag
+              variant={variant}
+              size={size}
+              isDismissible={isDismissible}
+              onDismiss={() => setIsVisible(false)}
+              leftIcon={hasLeftIcon ? <span style={{ fontSize: 12 }}>🔥</span> : undefined}
+            >
+              Mark UI Framework
+            </Tag>
+          ) : (
+            <button 
+              onClick={() => setIsVisible(true)}
+              style={{ padding: "8px 16px", background: "var(--mark-border)", color: "var(--mark-fg)", border: "none", borderRadius: 4, cursor: "pointer", fontSize: 14 }}
+            >
+              Reset Tag
+            </button>
+          )}
+        </div>
+      </div>
 
-        {/* All variants */}
-        <Section label="All Variants">
-          <ShowcaseRow>
-            <Tag variant="default">Default</Tag>
-            <Tag variant="primary">Primary</Tag>
-            <Tag variant="accent">Accent</Tag>
-            <Tag variant="success">Success</Tag>
-            <Tag variant="warning">Warning</Tag>
-            <Tag variant="danger">Danger</Tag>
-          </ShowcaseRow>
-        </Section>
+      {/* PLAYGROUND */}
+      <h3 id="playground" className="doc-section-label">PLAYGROUND</h3>
+      <div className="doc-playground-panel">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+          
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Variant</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={variant} onChange={(e) => setVariant(e.target.value as any)}>
+              <option value="default">default</option>
+              <option value="accent">accent</option>
+              <option value="success">success</option>
+              <option value="warning">warning</option>
+              <option value="error">error</option>
+            </select>
+          </div>
 
-        {/* All sizes */}
-        <Section label="All Sizes">
-          {(['xs', 'sm', 'md'] as const).map(size => (
-            <div key={size} style={{ marginBottom: '16px' }}>
-              <p style={{ fontFamily: 'var(--mark-font-code)', fontSize: '12px', color: 'var(--mark-fg-subtle)', marginBottom: '8px' }}>{size}</p>
-              <ShowcaseRow>
-                <Tag size={size} variant="default">Default</Tag>
-                <Tag size={size} variant="primary">Primary</Tag>
-                <Tag size={size} variant="accent">Accent</Tag>
-                <Tag size={size} variant="success">Success</Tag>
-              </ShowcaseRow>
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Size</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={size} onChange={(e) => setSize(e.target.value as any)}>
+              <option value="sm">sm</option>
+              <option value="md">md</option>
+            </select>
+          </div>
+
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Options</label>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={isDismissible} onChange={(e) => setIsDismissible(e.target.checked)} /> isDismissible</label>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={hasLeftIcon} onChange={(e) => setHasLeftIcon(e.target.checked)} /> leftIcon</label>
             </div>
-          ))}
-        </Section>
-
-        {/* Removable tags */}
-        <Section label="Removable Tags">
-          <div style={{ marginBottom: '16px' }}>
-            <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)', color: 'var(--mark-fg-muted)', marginBottom: '12px' }}>
-              Click the × button or use Delete/Backspace keys when focused
-            </p>
-            <ShowcaseRow>
-              {tags.map((tag, index) => (
-                <Tag 
-                  key={tag} 
-                  variant="primary" 
-                  removable 
-                  onRemove={() => removeTag(index)}
-                >
-                  {tag}
-                </Tag>
-              ))}
-            </ShowcaseRow>
-            {tags.length === 0 && (
-              <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)', color: 'var(--mark-fg-muted)', fontStyle: 'italic' }}>
-                All tags removed! 
-                <button 
-                  onClick={() => setTags(['React', 'TypeScript', 'Design System'])}
-                  style={{ marginLeft: '8px', background: 'none', border: 'none', color: 'var(--mark-accent-primary)', cursor: 'pointer', textDecoration: 'underline' }}
-                >
-                  Reset
-                </button>
-              </p>
-            )}
           </div>
-        </Section>
 
-        {/* Status tags */}
-        <Section label="Status Tags">
-          <ShowcaseRow>
-            <Tag variant="success">Active</Tag>
-            <Tag variant="warning">Pending</Tag>
-            <Tag variant="danger">Error</Tag>
-            <Tag variant="default">Draft</Tag>
-          </ShowcaseRow>
-        </Section>
+        </div>
+      </div>
 
-        {/* Category tags */}
-        <Section label="Category Tags">
-          <ShowcaseRow>
-            <Tag variant="accent" size="sm">Frontend</Tag>
-            <Tag variant="accent" size="sm">Backend</Tag>
-            <Tag variant="accent" size="sm">DevOps</Tag>
-            <Tag variant="accent" size="sm">Design</Tag>
-            <Tag variant="accent" size="sm">Mobile</Tag>
-          </ShowcaseRow>
-        </Section>
+      {/* VARIANTS */}
+      <h3 id="variants" className="doc-section-label">VARIANTS</h3>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 48 }}>
+        <Tag variant="default">Default Filter</Tag>
+        <Tag variant="accent" isDismissible>Accent Active</Tag>
+        <Tag variant="success" leftIcon={<span style={{fontSize: 10}}>●</span>}>Success Tag</Tag>
+        <Tag variant="error" isDismissible size="sm">Small Error</Tag>
+        <Tag variant="warning">Warning Status</Tag>
+      </div>
 
-        {/* Disabled state */}
-        <Section label="Disabled State">
-          <ShowcaseRow>
-            <Tag variant="primary" disabled>Disabled</Tag>
-            <Tag variant="success" disabled removable>Disabled Removable</Tag>
-            <Tag variant="accent" disabled>Cannot Interact</Tag>
-          </ShowcaseRow>
-        </Section>
+      {/* USAGE */}
+      <h3 id="usage" className="doc-section-label">USAGE GUIDELINES</h3>
+      <div className="usage-columns">
+        <div className="usage-col usage-do">
+          <h4>Do</h4>
+          <ul className="usage-list">
+            <li>Use Tags for user-applied filters that can be removed.</li>
+            <li>Use Tags for selected items in a multi-select pattern.</li>
+            <li>Use leftIcon to add visual context to category tags.</li>
+          </ul>
+        </div>
+        <div className="usage-col usage-dont">
+          <h4>Don&apos;t</h4>
+          <ul className="usage-list">
+            <li>Don&apos;t use Tags as navigation links.</li>
+            <li>Don&apos;t mix dismissible and non-dismissible Tags in the same group without visual distinction.</li>
+            <li>Don&apos;t use Tags for permanent labels — use Badge instead.</li>
+          </ul>
+        </div>
+      </div>
 
-        {/* Interactive demo */}
-        <Section label="Interactive Demo">
-          <div style={{ marginBottom: '16px' }}>
-            <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)', color: 'var(--mark-fg-muted)', marginBottom: '12px' }}>
-              Add and remove tags dynamically
-            </p>
-            <div style={{ marginBottom: '12px' }}>
-              <ShowcaseRow>
-                <button 
-                  onClick={() => addTag('JavaScript')}
-                  style={{ padding: '4px 8px', fontSize: '12px', background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-sm)', cursor: 'pointer', color: 'var(--mark-fg)' }}
-                >
-                  + JavaScript
-                </button>
-                <button 
-                  onClick={() => addTag('CSS')}
-                  style={{ padding: '4px 8px', fontSize: '12px', background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-sm)', cursor: 'pointer', color: 'var(--mark-fg)' }}
-                >
-                  + CSS
-                </button>
-                <button 
-                  onClick={() => addTag('HTML')}
-                  style={{ padding: '4px 8px', fontSize: '12px', background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-sm)', cursor: 'pointer', color: 'var(--mark-fg)' }}
-                >
-                  + HTML
-                </button>
-              </ShowcaseRow>
-            </div>
-            <ShowcaseRow>
-              {tags.map((tag, index) => (
-                <Tag 
-                  key={tag} 
-                  variant="accent" 
-                  removable 
-                  onRemove={() => removeTag(index)}
-                >
-                  {tag}
-                </Tag>
-              ))}
-            </ShowcaseRow>
-          </div>
-        </Section>
+      {/* ACCESSIBILITY */}
+      <h3 id="accessibility" className="doc-section-label">ACCESSIBILITY</h3>
+      <ul style={{ color: "var(--mark-fg)", opacity: 0.8, lineHeight: 1.7, fontSize: 15, marginBottom: 48 }}>
+        <li><strong>Dismiss button:</strong> <code>aria-label="Remove [tag text]"</code></li>
+        <li><strong>Keyboard:</strong> dismiss button focusable, activates on Enter and Space.</li>
+        <li><strong>Removal announcement:</strong> use <code>aria-live="polite"</code> on the tag container so removal is announced.</li>
+      </ul>
 
-        {/* Props table */}
-        <Section label="Props">
-          <PropsTable rows={[
-            ['children', 'ReactNode', '—', 'Tag content'],
-            ['variant', "'default' | 'primary' | 'accent' | 'success' | 'warning' | 'danger'", "'default'", 'Visual style variant'],
-            ['size', "'xs' | 'sm' | 'md'", "'md'", 'Tag size'],
-            ['removable', 'boolean', 'false', 'Show close button for removal'],
-            ['onRemove', '() => void', '—', 'Called when tag is removed'],
-            ['disabled', 'boolean', 'false', 'Disable interactions'],
-            ['className', 'string', "''", 'Additional CSS class'],
-          ]} />
-        </Section>
+      {/* PROPS */}
+      <h3 id="props" className="doc-section-label">PROPS</h3>
+      <div className="doc-table-wrapper">
+        <table className="doc-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>'default'|'accent'|'success'|'warning'|'error'</code></td><td><code>'default'</code></td><td>Visual style</td></tr>
+            <tr><td><code>size</code></td><td><code>'sm'|'md'</code></td><td><code>'md'</code></td><td>Tag size</td></tr>
+            <tr><td><code>isDismissible</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows dismiss button</td></tr>
+            <tr><td><code>onDismiss</code></td><td><code>function</code></td><td>—</td><td>Called when dismissed</td></tr>
+            <tr><td><code>leftIcon</code></td><td><code>React.ReactNode</code></td><td>—</td><td>Icon before label</td></tr>
+            <tr><td><code>isDisabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Prevents dismissal</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-        {/* Keyboard navigation */}
-        <Section label="Keyboard Navigation">
-          <div style={{ background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-md)', padding: '16px', fontFamily: 'var(--mark-font-code)', fontSize: '13px', color: 'var(--mark-fg)', lineHeight: 1.7 }}>
-            <p style={{ margin: '0 0 8px' }}>Tab: Focus removable tags</p>
-            <p style={{ margin: '0 0 8px' }}>Delete/Backspace: Remove focused tag</p>
-            <p style={{ margin: 0 }}>Mouse: Click × button to remove</p>
-          </div>
-        </Section>
+      {/* IMPORT */}
+      <h3 id="import" className="doc-section-label">IMPORT</h3>
+      <div className="doc-code-block" style={{ marginBottom: 0 }}>
+        <pre><code>import {"{"} Tag {"}"} from '@markui/core'</code></pre>
+      </div>
 
-        {/* Animation details */}
-        <Section label="Animation Details">
-          <div style={{ background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-md)', padding: '16px', fontFamily: 'var(--mark-font-code)', fontSize: '13px', color: 'var(--mark-fg)', lineHeight: 1.7 }}>
-            <p style={{ margin: '0 0 8px' }}>Hover: scale(1.02) · duration: 0.12s · ease: bounce</p>
-            <p style={{ margin: '0 0 8px' }}>Click: scale(0.98) · duration: 0.12s · ease: bounce</p>
-            <p style={{ margin: 0 }}>Remove: Fun animation trigger on dismiss</p>
-          </div>
-        </Section>
-      </motion.div>
-    </div>
-  )
+    </ComponentDocTemplate>
+  );
 }

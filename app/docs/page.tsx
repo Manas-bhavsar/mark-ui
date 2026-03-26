@@ -1,251 +1,98 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { Alert } from "@/packages/core";
 import Link from "next/link";
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.1,
-    },
-  },
-};
+export const metadata = { title: "Introduction - MARK UI Docs" };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const },
-  },
-};
-
-const features = [
-  {
-    icon: "🎨",
-    title: "Expressive Theming",
-    description:
-      "Switch between curated themes instantly. CSS variables power every color — no rebuilds required.",
-  },
-  {
-    icon: "⚡",
-    title: "Motion-First",
-    description:
-      "Every interaction is animated with Framer Motion. Smooth, snappy, and respects reduced-motion preferences.",
-  },
-  {
-    icon: "📦",
-    title: "Component Library",
-    description:
-      "Production-ready React components built with TypeScript, fully typed and tree-shakable.",
-  },
-  {
-    icon: "🌙",
-    title: "Dark by Default",
-    description:
-      "Designed for dark interfaces first — with beautiful surface layers and subtle borders.",
-  },
-];
-
-export default function DocsPage() {
+export default function IntroPage() {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-      >
-        {/* Header */}
-        <motion.div variants={itemVariants} className="mb-12">
-          <span
-            className="inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full mb-4"
-            style={{
-              backgroundColor: "var(--mark-accent-glow)",
-              color: "var(--mark-accent-primary)",
-              borderRadius: "var(--mark-radius-pill)",
-              fontFamily: "var(--mark-font-display)",
-            }}
-          >
-            Documentation
+    <>
+      <div className="doc-breadcrumbs">
+        <Link href="/docs">Docs</Link>
+        <span className="doc-breadcrumb-sep">/</span>
+        <span>Getting Started</span>
+        <span className="doc-breadcrumb-sep">/</span>
+        <span style={{ color: "var(--mark-fg)", fontWeight: 500 }}>Introduction</span>
+      </div>
+
+      <h1>Welcome to Mark UI</h1>
+
+      <p className="docs-description-line" style={{ maxWidth: 700, fontSize: 20 }}>
+        Mark UI is a motion-first React component library for developers who
+        refuse to blend in. Every component ships with animations baked in,
+        every theme is swappable in one click, and every prop is fully typed
+        with TypeScript.
+        <br /><br />
+        This isn&apos;t just a component library.<br />
+        It is a design language.
+      </p>
+
+      <div style={{ display: "flex", gap: "12px", marginBottom: "64px", flexWrap: "wrap" }}>
+        {["Motion-first", "TypeScript ready", "Fully themeable", "Accessible by default"].map(tag => (
+          <span key={tag} style={{
+            padding: "6px 16px",
+            background: "var(--mark-bg-surface)",
+            border: "1px solid var(--mark-border-strong)",
+            borderRadius: "var(--mark-radius-pill)",
+            fontSize: "13px",
+            fontFamily: "var(--mark-font-display)",
+            fontWeight: 600
+          }}>
+            {tag}
           </span>
-          <h1
-            className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4"
-            style={{ color: "var(--mark-fg)" }}
-          >
-            Getting Started
-          </h1>
-          <p
-            className="text-lg leading-relaxed max-w-2xl"
-            style={{ color: "var(--mark-fg)", opacity: 0.55 }}
-          >
-            Mark UI is a React component library with an expressive theming
-            engine. Build interfaces that leave a mark — fast, beautiful, and
-            themeable.
+        ))}
+      </div>
+
+      <h2>What makes Mark UI different</h2>
+
+      <div style={{ display: "grid", gap: "32px", marginBottom: "64px" }}>
+        <div style={{ padding: "32px", background: "var(--mark-bg-elevated)", border: "1px solid var(--mark-border)", borderRadius: "var(--mark-radius-lg)" }}>
+          <h3 style={{ margin: "0 0 16px", display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontSize: 24 }}>⚡</span> Motion as a feature
+          </h3>
+          <p className="docs-body-text" style={{ margin: 0 }}>
+            Every component has a defined animation story. What moves, when it moves,
+            and how it feels. Built on a shared motion token system so the whole
+            library moves with one consistent personality.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Features Grid */}
-        <motion.div variants={itemVariants} className="mb-16">
-          <h2
-            className="text-sm font-bold uppercase tracking-wider mb-6"
-            style={{ color: "var(--mark-fg)", opacity: 0.4, fontFamily: "var(--mark-font-display)" }}
-          >
-            What you get
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {features.map((feature) => (
-              <motion.div
-                key={feature.title}
-                whileHover={{ y: -2 }}
-                className="p-5 rounded-xl"
-                style={{
-                  backgroundColor: "var(--mark-bg-surface)",
-                  border: "1px solid var(--mark-border)",
-                  borderRadius: "var(--mark-radius-lg)",
-                  transition: `all var(--mark-duration-fast) var(--mark-ease-smooth)`,
-                }}
-              >
-                <span className="text-2xl mb-3 block">{feature.icon}</span>
-                <h3
-                  className="text-base font-bold mb-1.5"
-                  style={{ color: "var(--mark-fg)" }}
-                >
-                  {feature.title}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: "var(--mark-fg)", opacity: 0.5 }}
-                >
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Quick Start */}
-        <motion.div variants={itemVariants} className="mb-16">
-          <h2
-            className="text-sm font-bold uppercase tracking-wider mb-6"
-            style={{ color: "var(--mark-fg)", opacity: 0.4, fontFamily: "var(--mark-font-display)" }}
-          >
-            Quick Start
-          </h2>
-          <div
-            className="p-5 rounded-xl"
-            style={{
-              backgroundColor: "var(--mark-bg-surface)",
-              border: "1px solid var(--mark-border)",
-              borderRadius: "var(--mark-radius-lg)",
-            }}
-          >
-            <p
-              className="text-sm font-medium mb-3"
-              style={{ color: "var(--mark-fg)", opacity: 0.6 }}
-            >
-              1. Install the package
-            </p>
-            <pre
-              className="text-sm p-4 rounded-lg mb-4 overflow-x-auto"
-              style={{
-                backgroundColor: "var(--mark-bg)",
-                borderRadius: "var(--mark-radius-md)",
-                color: "var(--mark-accent-primary)",
-                border: "1px solid var(--mark-border)",
-              }}
-            >
-              <code>npm install mark-ui</code>
-            </pre>
-
-            <p
-              className="text-sm font-medium mb-3"
-              style={{ color: "var(--mark-fg)", opacity: 0.6 }}
-            >
-              2. Wrap your app with the ThemeProvider
-            </p>
-            <pre
-              className="text-sm p-4 rounded-lg mb-4 overflow-x-auto"
-              style={{
-                backgroundColor: "var(--mark-bg)",
-                borderRadius: "var(--mark-radius-md)",
-                color: "var(--mark-fg)",
-                border: "1px solid var(--mark-border)",
-              }}
-            >
-              <code>{`import { ThemeProvider } from 'mark-ui'
-
-export default function App({ children }) {
-  return (
-    <ThemeProvider>
-      {children}
-    </ThemeProvider>
-  )
-}`}</code>
-            </pre>
-
-            <p
-              className="text-sm font-medium mb-3"
-              style={{ color: "var(--mark-fg)", opacity: 0.6 }}
-            >
-              3. Use components
-            </p>
-            <pre
-              className="text-sm p-4 rounded-lg overflow-x-auto"
-              style={{
-                backgroundColor: "var(--mark-bg)",
-                borderRadius: "var(--mark-radius-md)",
-                color: "var(--mark-fg)",
-                border: "1px solid var(--mark-border)",
-              }}
-            >
-              <code>{`import { Button, Card } from 'mark-ui'
-
-export default function Page() {
-  return (
-    <Card>
-      <Button variant="primary">
-        Get Started
-      </Button>
-    </Card>
-  )
-}`}</code>
-            </pre>
-          </div>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          variants={itemVariants}
-          className="text-center py-8"
-          style={{
-            borderTop: "1px solid var(--mark-border)",
-          }}
-        >
-          <p
-            className="text-sm mb-4"
-            style={{ color: "var(--mark-fg)", opacity: 0.5 }}
-          >
-            Ready to explore?
+        <div style={{ padding: "32px", background: "var(--mark-bg-elevated)", border: "1px solid var(--mark-border)", borderRadius: "var(--mark-radius-lg)" }}>
+          <h3 style={{ margin: "0 0 16px", display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontSize: 24 }}>🎨</span> Themes that actually work
+          </h3>
+          <p className="docs-body-text" style={{ margin: 0 }}>
+            Two collections. Six themes at launch. Switch the entire personality
+            of your product in one click — no reload, no flash, no config.
           </p>
-          <Link href="/components">
-            <motion.span
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-block px-6 py-3 text-sm font-semibold rounded-lg"
-              style={{
-                fontFamily: "var(--mark-font-display)",
-                backgroundColor: "var(--mark-accent-primary)",
-                color: "var(--mark-accent-secondary)",
-                borderRadius: "var(--mark-radius-md)",
-              }}
-            >
-              Browse Components →
-            </motion.span>
-          </Link>
-        </motion.div>
-      </motion.div>
-    </div>
+        </div>
+
+        <div style={{ padding: "32px", background: "var(--mark-bg-elevated)", border: "1px solid var(--mark-border)", borderRadius: "var(--mark-radius-lg)" }}>
+          <h3 style={{ margin: "0 0 16px", display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontSize: 24 }}>🔷</span> Built for developers
+          </h3>
+          <p className="docs-body-text" style={{ margin: 0 }}>
+            Full TypeScript coverage, consistent prop APIs across every
+            component, and docs that respect your time.
+          </p>
+        </div>
+      </div>
+
+      <h2>Prerequisites</h2>
+      <Alert variant="info" title="Requirements" isDismissible={false}>
+        <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <li>Node.js v18 or higher</li>
+          <li>React 18 or higher</li>
+          <li>TypeScript recommended but not required</li>
+        </ul>
+      </Alert>
+
+      {/* Prev / Next Bottom Navigation */}
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "100px", paddingTop: "32px", borderTop: "1px solid var(--mark-border-strong)" }}>
+        <Link href="/docs/installation" style={{ textDecoration: "none", color: "var(--mark-fg)", textAlign: "right" }}>
+          <div style={{ fontSize: "12px", opacity: 0.5, fontFamily: "var(--mark-font-display)" }}>NEXT →</div>
+          <div style={{ fontSize: "18px", fontWeight: 600, marginTop: "4px" }}>Installation</div>
+        </Link>
+      </div>
+    </>
   );
 }

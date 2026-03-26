@@ -1,43 +1,126 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Spinner from '@mark-ui/components/feedback/Spinner/Spinner'
-import Button from '@mark-ui/components/inputs/Button/Button'
+import { useState } from "react";
+import ComponentDocTemplate from "@/components/docs/ComponentDocTemplate";
+import { Spinner, Button } from "@/packages/core";
 
-const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
-const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const } } }
+export default function SpinnerDocPage() {
+  const [size, setSize] = useState<"sm" | "md" | "lg" | "xl">("md");
+  const [color, setColor] = useState<"accent" | "white" | "muted">("accent");
+  const [showLabel, setShowLabel] = useState(true);
 
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
-  return <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}><h2 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'var(--mark-text-sm)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--mark-fg)', opacity: 0.4, marginBottom: '24px' }}>{label}</h2>{children}</motion.div>
-}
-function ShowcaseRow({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', alignItems: 'center' }}>{children}</div>
-}
-function PropsTable({ rows }: { rows: [string, string, string, string][] }) {
-  return <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-sm)' }}><thead><tr style={{ borderBottom: '1px solid var(--mark-border-strong)' }}>{['Prop','Type','Default','Description'].map(h=><th key={h} style={{ textAlign:'left', padding:'8px 12px', color:'var(--mark-fg-muted)', fontWeight:600 }}>{h}</th>)}</tr></thead><tbody>{rows.map(([p,t,d,desc])=><tr key={p} style={{ borderBottom:'1px solid var(--mark-border)' }}><td style={{ padding:'8px 12px', color:'var(--mark-accent-primary)', fontFamily:'var(--mark-font-code)' }}>{p}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg-muted)', fontFamily:'var(--mark-font-code)' }}>{t}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg-subtle)', fontFamily:'var(--mark-font-code)' }}>{d}</td><td style={{ padding:'8px 12px', color:'var(--mark-fg)' }}>{desc}</td></tr>)}</tbody></table></div>
-}
-
-export default function SpinnerDoc() {
   return (
-    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 24px' }}>
-      <motion.div variants={containerVariants} initial="hidden" animate="show">
-        <motion.div variants={itemVariants} style={{ marginBottom: '48px' }}>
-          <span style={{ display: 'inline-flex', fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: 'var(--mark-radius-pill)', background: 'var(--mark-accent-glow)', color: 'var(--mark-accent-primary)', fontFamily: 'var(--mark-font-display)', marginBottom: '16px' }}>Component</span>
-          <h1 style={{ fontFamily: 'var(--mark-font-display)', fontSize: 'clamp(36px, 5vw, 48px)', fontWeight: 800, color: 'var(--mark-fg)', margin: '0 0 12px' }}>Spinner</h1>
-          <p style={{ fontFamily: 'var(--mark-font-body)', fontSize: 'var(--mark-text-lg)', color: 'var(--mark-fg-muted)', lineHeight: 1.6, maxWidth: '640px', margin: 0 }}>Loading indicator. Used inside Button and standalone for page/section loading states.</p>
-        </motion.div>
-        <Section label="All Sizes"><ShowcaseRow><Spinner size="sm" /><Spinner size="md" /><Spinner size="lg" /><Spinner size="xl" /></ShowcaseRow></Section>
-        <Section label="Color Variants"><ShowcaseRow><Spinner color="accent" /><Spinner color="white" /><Spinner color="muted" /></ShowcaseRow></Section>
-        <Section label="With Label"><Spinner size="lg" label="Loading..." /></Section>
-        <Section label="Inside a Button"><Button variant="primary" isLoading>Submit</Button></Section>
-        <Section label="Props"><PropsTable rows={[['size',"'sm'|'md'|'lg'|'xl'","'md'",'Spinner diameter'],['color',"'accent'|'white'|'muted'","'accent'",'Stroke color'],['label','string','—','Text below spinner'],['className','string',"''",'Additional CSS class']]} /></Section>
-        <Section label="Animation Details">
-          <div style={{ background: 'var(--mark-bg-elevated)', border: '1px solid var(--mark-border)', borderRadius: 'var(--mark-radius-md)', padding: '16px', fontFamily: 'var(--mark-font-code)', fontSize: '13px', color: 'var(--mark-fg)', lineHeight: 1.7 }}>
-            <p style={{ margin: '0 0 8px' }}>Rotation: 0→360deg · 0.75s · linear · infinite</p>
-            <p style={{ margin: 0 }}>Reduced motion: opacity pulse instead of spin</p>
+    <ComponentDocTemplate
+      name="Spinner"
+      category="Feedback"
+      description="A loading indicator for async operations. Used standalone for section loading states and inside Button for loading states."
+    >
+      {/* PREVIEW */}
+      <h3 id="preview" className="doc-section-label">PREVIEW</h3>
+      <div className="doc-preview-stage">
+        <Spinner
+          size={size}
+          color={color}
+          label={showLabel ? "Loading content..." : undefined}
+        />
+      </div>
+
+      {/* PLAYGROUND */}
+      <h3 id="playground" className="doc-section-label">PLAYGROUND</h3>
+      <div className="doc-playground-panel">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+          
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Size</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={size} onChange={(e) => setSize(e.target.value as any)}>
+              <option value="sm">sm</option>
+              <option value="md">md</option>
+              <option value="lg">lg</option>
+              <option value="xl">xl</option>
+            </select>
           </div>
-        </Section>
-      </motion.div>
-    </div>
-  )
+
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Color</label>
+            <select style={{ width: "100%", padding: 8, background: "var(--mark-bg)", color: "var(--mark-fg)", border: "1px solid var(--mark-border-strong)", borderRadius: 4 }} value={color} onChange={(e) => setColor(e.target.value as any)}>
+              <option value="accent">accent</option>
+              <option value="white">white</option>
+              <option value="muted">muted</option>
+            </select>
+          </div>
+
+          <div>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Label</label>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={showLabel} onChange={(e) => setShowLabel(e.target.checked)} /> show label</label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* VARIANTS */}
+      <h3 id="variants" className="doc-section-label">VARIANTS</h3>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 64, marginBottom: 48, alignItems: "flex-end" }}>
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+        <Spinner size="xl" />
+        <Spinner color="muted" />
+        <Button variant="primary" isLoading>Submitting</Button>
+      </div>
+
+      {/* USAGE */}
+      <h3 id="usage" className="doc-section-label">USAGE GUIDELINES</h3>
+      <div className="usage-columns">
+        <div className="usage-col usage-do">
+          <h4>Do</h4>
+          <ul className="usage-list">
+            <li>Use Spinner for operations that take between 1 and 10 seconds.</li>
+            <li>Always pair with a label when used standalone so users know what is loading.</li>
+            <li>Use color="accent" for Spinners that should match the active theme.</li>
+          </ul>
+        </div>
+        <div className="usage-col usage-dont">
+          <h4>Don&apos;t</h4>
+          <ul className="usage-list">
+            <li>Don&apos;t use Spinner for operations under 300ms — the flash is more disruptive than showing nothing.</li>
+            <li>Don&apos;t use Spinner for long operations over 10 seconds — use a progress bar instead.</li>
+            <li>Don&apos;t use multiple Spinners in the same view — consolidate loading states.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* ACCESSIBILITY */}
+      <h3 id="accessibility" className="doc-section-label">ACCESSIBILITY</h3>
+      <ul style={{ color: "var(--mark-fg)", opacity: 0.8, lineHeight: 1.7, fontSize: 15, marginBottom: 48 }}>
+        <li><strong>ARIA:</strong> <code>role="status"</code> on Spinner wrapper, <code>aria-label="Loading"</code> by default.</li>
+        <li><strong>Label prop:</strong> overrides the <code>aria-label</code> value automatically.</li>
+        <li><strong>Reduced motion:</strong> rotation replaced with opacity pulse animation automatically.</li>
+      </ul>
+
+      {/* PROPS */}
+      <h3 id="props" className="doc-section-label">PROPS</h3>
+      <div className="doc-table-wrapper">
+        <table className="doc-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>size</code></td><td><code>'sm'|'md'|'lg'|'xl'</code></td><td><code>'md'</code></td><td>Spinner dimensions</td></tr>
+            <tr><td><code>color</code></td><td><code>'accent'|'white'|'muted'</code></td><td><code>'accent'</code></td><td>Spinner color</td></tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td>—</td><td>Visible + aria label text</td></tr>
+            <tr><td><code>className</code></td><td><code>string</code></td><td>—</td><td>Additional CSS classes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* IMPORT */}
+      <h3 id="import" className="doc-section-label">IMPORT</h3>
+      <div className="doc-code-block" style={{ marginBottom: 0 }}>
+        <pre><code>import {"{"} Spinner {"}"} from '@markui/core'</code></pre>
+      </div>
+
+    </ComponentDocTemplate>
+  );
 }

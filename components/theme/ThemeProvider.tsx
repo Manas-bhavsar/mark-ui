@@ -44,44 +44,53 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // Define setTheme first so it can be used in effects
   const setTheme = useCallback((newTheme: ThemeId) => {
     // Validate theme is live before applying
-    const safeTheme = getSafeThemeId(newTheme);
-    
-    if (safeTheme !== newTheme) {
-      console.warn(`Theme "${newTheme}" is not live, using "${safeTheme}" instead`);
-    }
-    
-    setThemeState(safeTheme);
-    const actualTheme = applyTheme(safeTheme);
-    localStorage.setItem(STORAGE_KEY, actualTheme);
-  }, []);
+      const safeTheme = getSafeThemeId(newTheme);
+      
+      // Update state immediately
+      setThemeState(safeTheme);
 
-  // Apply theme on change and validate on mount
-  useEffect(() => {
-    const actualTheme = applyTheme(theme);
-    // If the applied theme is different from requested (due to fallback), update state
-    if (actualTheme !== theme) {
-      setThemeState(actualTheme);
-      localStorage.setItem(STORAGE_KEY, actualTheme);
-    }
-  }, [theme]);
-
-  // Validate stored theme on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(STORAGE_KEY) as ThemeId | null;
-      if (stored && !isThemeLive(stored)) {
-        console.warn(`Stored theme "${stored}" is no longer live, switching to monochrome`);
-        setTheme('monochrome');
+      // Apply to document immediately
+      applyTheme(safeTheme);
+      
+      // Save to storage
+      try {
+        localStorage.setItem(STORAGE_KEY, safeTheme);
+      } catch (e) {
+        // Ignore quota errors
       }
-    }
+    },
+    []
+  );
+
+  // Sync state if localStorage changes from another tab
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        const stored = e.newValue as ThemeId;
+        if (!isThemeLive(stored)) {
+          const fallback = getSafeThemeId(stored);
+          setTheme(fallback);
+        } else {
+          setTheme(stored);
+        }
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, [setTheme]);
+
+  // Re-verify theme is live on mount (in case status changed in code)
+  useEffect(() => {
+    if (!isThemeLive(theme)) {
+      setTheme(getSafeThemeId(theme));
+    }
+  }, [theme, setTheme]);
 
   // Validate current theme when page becomes visible (user returns to tab)
   useEffect(() => {
     const validateCurrentTheme = () => {
       if (!isThemeLive(theme)) {
-        console.warn(`Current theme "${theme}" is no longer live, switching to monochrome`);
-        setTheme('monochrome');
+        setTheme(getSafeThemeId(theme));
       }
     };
 
