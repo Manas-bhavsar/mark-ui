@@ -166,7 +166,7 @@ export default function ThemesPage() {
             <div className="themes-palette-stack">
               {detail.palette.map((swatch) => (
                 <PaletteSwatch
-                  key={`${activeTheme}-${swatch.hex}`}
+                  key={`${activeTheme}-${swatch.name}`}
                   swatch={swatch}
                 />
               ))}

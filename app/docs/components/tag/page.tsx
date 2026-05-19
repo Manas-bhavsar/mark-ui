@@ -9,7 +9,7 @@ import { ThemeSnippetViewer } from "@/components/docs";
 export default function TagDocPage() {
   const [variant, setVariant] = useState<"default" | "accent" | "success" | "warning" | "danger">("default");
   const [size, setSize] = useState<"sm" | "md">("md");
-  const [removable, setRemovable] = useState(false);
+  const [isRemovable, setIsRemovable] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   return (
@@ -26,7 +26,7 @@ export default function TagDocPage() {
             <Tag
               variant={variant}
               size={size}
-              removable={removable}
+              isRemovable={isRemovable}
               onRemove={() => setIsVisible(false)}
             >
               Mark UI Framework
@@ -69,7 +69,7 @@ export default function TagDocPage() {
           <div>
             <label style={{ display: "block", fontSize: 13, fontWeight: 700, marginBottom: 8, color: "var(--mark-fg)", opacity: 0.6 }}>Options</label>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={removable} onChange={(e) => setRemovable(e.target.checked)} /> removable</label>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14 }}><input type="checkbox" checked={isRemovable} onChange={(e) => setIsRemovable(e.target.checked)} /> isRemovable</label>
             </div>
           </div>
 
@@ -80,9 +80,9 @@ export default function TagDocPage() {
       <h3 id="variants" className="doc-section-label">VARIANTS</h3>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 48 }}>
         <Tag variant="default">Default Filter</Tag>
-        <Tag variant="accent" removable>Accent Active</Tag>
+        <Tag variant="accent" isRemovable>Accent Active</Tag>
         <Tag variant="success">Success Tag</Tag>
-        <Tag variant="danger" removable size="sm">Small Danger</Tag>
+        <Tag variant="danger" isRemovable size="sm">Small Danger</Tag>
         <Tag variant="warning">Warning Status</Tag>
       </div>
 
@@ -125,9 +125,9 @@ export default function TagDocPage() {
           <tbody>
             <tr><td><code>variant</code></td><td><code>'default'|'primary'|'accent'|'success'|'warning'|'danger'</code></td><td><code>'default'</code></td><td>Visual style</td></tr>
             <tr><td><code>size</code></td><td><code>'sm'|'md'</code></td><td><code>'md'</code></td><td>Tag size</td></tr>
-            <tr><td><code>removable</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows dismiss button</td></tr>
+            <tr><td><code>isRemovable</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows dismiss button</td></tr>
             <tr><td><code>onRemove</code></td><td><code>function</code></td><td>—</td><td>Called when dismissed</td></tr>
-            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Prevents dismissal</td></tr>
+            <tr><td><code>isDisabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Prevents dismissal</td></tr>
           </tbody>
         </table>
       </div>

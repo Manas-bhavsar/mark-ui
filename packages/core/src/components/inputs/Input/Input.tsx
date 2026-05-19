@@ -115,7 +115,7 @@ export default function Input({
           id="input-message"
           className="font-body text-sm mt-2 mb-0"
           style={{
-            color: isMessageError ? '#EF4444' : 'var(--mark-fg-muted)',
+            color: isMessageError ? 'var(--mark-color-error)' : 'var(--mark-fg-muted)',
           }}
         >
           {message}

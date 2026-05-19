@@ -22,19 +22,19 @@ const VARIANT_STYLES = {
     border: '1px solid var(--mark-accent-primary)',
   },
   success: {
-    background: 'rgba(34, 197, 94, 0.08)',
-    color: '#22C55E',
-    border: '1px solid #22C55E',
+    background: 'var(--mark-color-success-subtle)',
+    color: 'var(--mark-color-success)',
+    border: '1px solid var(--mark-color-success)',
   },
   warning: {
-    background: 'rgba(234, 179, 8, 0.08)',
-    color: '#EAB308',
-    border: '1px solid #EAB308',
+    background: 'var(--mark-color-warning-subtle)',
+    color: 'var(--mark-color-warning)',
+    border: '1px solid var(--mark-color-warning)',
   },
   danger: {
-    background: 'rgba(239, 68, 68, 0.08)',
-    color: '#EF4444',
-    border: '1px solid #EF4444',
+    background: 'var(--mark-color-error-subtle)',
+    color: 'var(--mark-color-error)',
+    border: '1px solid var(--mark-color-error)',
   },
 } as const
 
@@ -63,9 +63,9 @@ export default function Tag({
   children,
   variant = 'default',
   size = 'md',
-  removable = false,
+  isRemovable = false,
   onRemove,
-  disabled = false,
+  isDisabled = false,
   className = '',
 }: TagProps) {
   const tagRef = useRef<HTMLDivElement>(null)
@@ -74,13 +74,13 @@ export default function Tag({
   const s = SIZE_STYLES[size]
 
   const handleRemove = () => {
-    if (disabled) return
+    if (isDisabled) return
     triggerAnimation({ trigger: 'dismiss', originRef: tagRef })
     onRemove?.()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (removable && !disabled && (e.key === 'Delete' || e.key === 'Backspace')) {
+    if (isRemovable && !isDisabled && (e.key === 'Delete' || e.key === 'Backspace')) {
       e.preventDefault()
       handleRemove()
     }
@@ -90,12 +90,12 @@ export default function Tag({
     <motion.div
       ref={tagRef}
       className={className}
-      tabIndex={removable && !disabled ? 0 : undefined}
-      role={removable ? 'button' : undefined}
-      aria-label={removable ? `Remove ${children}` : undefined}
+      tabIndex={isRemovable && !isDisabled ? 0 : undefined}
+      role={isRemovable ? 'button' : undefined}
+      aria-label={isRemovable ? `Remove ${children}` : undefined}
       onKeyDown={handleKeyDown}
-      whileHover={disabled ? {} : { scale: 1.02 }}
-      whileTap={disabled ? {} : { scale: 0.98 }}
+      whileHover={isDisabled ? {} : { scale: 1.02 }}
+      whileTap={isDisabled ? {} : { scale: 0.98 }}
       transition={{
         duration: 0.12,
         ease: [0.34, 1.56, 0.64, 1], // mark-ease-bounce
@@ -118,8 +118,8 @@ export default function Tag({
         fontSize: s.fontSize,
         lineHeight: 1,
         // Interaction
-        cursor: removable && !disabled ? 'pointer' : 'default',
-        opacity: disabled ? 0.4 : 1,
+        cursor: isRemovable && !isDisabled ? 'pointer' : 'default',
+        opacity: isDisabled ? 0.4 : 1,
         outline: 'none',
         // Transition for non-motion properties
         transition: `background var(--mark-duration-fast) var(--mark-ease-smooth),
@@ -127,7 +127,7 @@ export default function Tag({
                      opacity var(--mark-duration-fast) var(--mark-ease-smooth)`,
       }}
       onFocus={(e) => {
-        if (removable && !disabled) {
+        if (isRemovable && !isDisabled) {
           e.currentTarget.style.outline = '2px solid var(--mark-accent-primary)'
           e.currentTarget.style.outlineOffset = '2px'
         }
@@ -137,16 +137,16 @@ export default function Tag({
       }}
     >
       <span>{children}</span>
-      {removable && (
+      {isRemovable && (
         <button
           onClick={handleRemove}
-          disabled={disabled}
+          disabled={isDisabled}
           aria-label="Remove"
           style={{
             background: 'none',
             border: 'none',
             color: 'inherit',
-            cursor: disabled ? 'not-allowed' : 'pointer',
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
             padding: '2px',
             margin: '0 -2px 0 2px',
             fontSize: '12px',
@@ -160,8 +160,8 @@ export default function Tag({
             transition: `background var(--mark-duration-fast) var(--mark-ease-smooth)`,
           }}
           onMouseEnter={(e) => {
-            if (!disabled) {
-              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.1)'
+            if (!isDisabled) {
+              e.currentTarget.style.background = 'var(--mark-accent-subtle)'
             }
           }}
           onMouseLeave={(e) => {

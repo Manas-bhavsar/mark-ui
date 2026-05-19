@@ -7,27 +7,27 @@ import { useFunAnimation } from '../../../animations/useFunAnimation'
 
 const VARIANT_STYLES = {
   info: {
-    bg: 'rgba(59, 130, 246, 0.08)',
-    borderColor: '#3B82F6',
-    iconColor: '#3B82F6',
+    bg: 'var(--mark-color-info-subtle)',
+    borderColor: 'var(--mark-color-info)',
+    iconColor: 'var(--mark-color-info)',
     defaultIcon: 'ℹ',
   },
   success: {
-    bg: 'rgba(34, 197, 94, 0.08)',
-    borderColor: '#22C55E',
-    iconColor: '#22C55E',
+    bg: 'var(--mark-color-success-subtle)',
+    borderColor: 'var(--mark-color-success)',
+    iconColor: 'var(--mark-color-success)',
     defaultIcon: '✓',
   },
   warning: {
-    bg: 'rgba(234, 179, 8, 0.08)',
-    borderColor: '#EAB308',
-    iconColor: '#EAB308',
+    bg: 'var(--mark-color-warning-subtle)',
+    borderColor: 'var(--mark-color-warning)',
+    iconColor: 'var(--mark-color-warning)',
     defaultIcon: '⚠',
   },
   error: {
-    bg: 'rgba(239, 68, 68, 0.08)',
-    borderColor: '#EF4444',
-    iconColor: '#EF4444',
+    bg: 'var(--mark-color-error-subtle)',
+    borderColor: 'var(--mark-color-error)',
+    iconColor: 'var(--mark-color-error)',
     defaultIcon: '✕',
   },
   accent: {

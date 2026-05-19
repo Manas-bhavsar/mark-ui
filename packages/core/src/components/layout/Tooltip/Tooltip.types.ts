@@ -10,7 +10,7 @@ export interface TooltipProps {
   /** Hide delay in milliseconds */
   hideDelay?: number
   /** Disabled state */
-  disabled?: boolean
+  isDisabled?: boolean
   /** Additional CSS class */
   className?: string
 }

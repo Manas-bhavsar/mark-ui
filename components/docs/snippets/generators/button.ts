@@ -69,7 +69,7 @@ export default function ButtonExample() {${animHook}
       </Button>
 
       {/* Full width */}
-      <Button variant="primary" fullWidth>
+      <Button variant="primary" isFullWidth>
         Full Width Action
       </Button>
     </div>

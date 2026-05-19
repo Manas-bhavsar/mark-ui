@@ -125,7 +125,7 @@ export default function Avatar({
         ...sizeStyles,
         borderRadius,
         backgroundColor,
-        color: shouldShowImage ? 'transparent' : 'white',
+        color: shouldShowImage ? 'transparent' : 'var(--mark-fg)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -182,10 +182,10 @@ export default function Avatar({
             height: size === 'xs' ? '6px' : size === 'sm' ? '8px' : '10px',
             borderRadius: '50%',
             backgroundColor: 
-              status === 'online' ? '#10B981' :
-              status === 'away' ? '#F59E0B' :
-              status === 'busy' ? '#EF4444' :
-              '#6B7280', // offline
+              status === 'online' ? 'var(--mark-color-online)' :
+              status === 'away' ? 'var(--mark-color-away)' :
+              status === 'busy' ? 'var(--mark-color-busy)' :
+              'var(--mark-color-offline)', // offline
             border: '2px solid var(--mark-bg)',
           }}
           aria-label={`Status: ${status}`}

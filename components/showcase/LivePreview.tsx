@@ -145,7 +145,7 @@ export default function LivePreview({ componentId }: LivePreviewProps) {
         <div style={stageStyles}>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             <Tag variant="default" size="sm">React</Tag>
-            <Tag variant="primary" size="sm" removable>TypeScript</Tag>
+            <Tag variant="primary" size="sm" isRemovable>TypeScript</Tag>
           </div>
         </div>
       );

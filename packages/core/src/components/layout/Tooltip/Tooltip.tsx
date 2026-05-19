@@ -18,7 +18,7 @@ export default function Tooltip({
   placement = 'top',
   showDelay = 500,
   hideDelay = 200,
-  disabled = false,
+  isDisabled = false,
   className = '',
 }: TooltipProps) {
   const triggerRef = useRef<HTMLDivElement>(null)
@@ -101,7 +101,7 @@ export default function Tooltip({
   }, [calculatePosition])
 
   const showTooltip = useCallback(() => {
-    if (disabled) return
+    if (isDisabled) return
     
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current)
@@ -115,7 +115,7 @@ export default function Tooltip({
         updatePosition()
       })
     }, showDelay)
-  }, [disabled, showDelay, updatePosition])
+  }, [isDisabled, showDelay, updatePosition])
 
   const hideTooltip = useCallback(() => {
     if (showTimeoutRef.current) {
@@ -219,13 +219,13 @@ export default function Tooltip({
           zIndex: 1000,
           maxWidth: '320px',
           padding: 'var(--mark-space-2) var(--mark-space-3)',
-          backgroundColor: '#1a1a1a',
-          color: '#ffffff',
+          backgroundColor: 'var(--mark-bg-elevated)',
+          color: 'var(--mark-fg)',
           fontSize: 'var(--mark-text-sm)',
           lineHeight: 'var(--mark-leading-tight)',
           borderRadius: 'var(--mark-radius-md)',
           boxShadow: 'var(--mark-shadow-lg)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          border: '1px solid var(--mark-border)',
           wordWrap: 'break-word',
           pointerEvents: 'none',
         }}

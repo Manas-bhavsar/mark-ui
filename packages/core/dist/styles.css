@@ -21,8 +21,8 @@
     --color-button-secondary-border: var(--mark-border-strong);
     --color-button-ghost-fg: var(--mark-fg);
     --color-button-ghost-hover-bg: var(--mark-bg-elevated);
-    --color-button-destructive-bg: #EF4444;
-    --color-button-destructive-fg: #FAFAFA;
+    --color-button-destructive-bg: var(--mark-color-error);
+    --color-button-destructive-fg: var(--mark-fg);
   }
 }
 @layer base {
@@ -397,7 +397,7 @@
     border: none;
   }
   .mark-button-destructive:hover:not(:disabled) {
-    box-shadow: 0 0 24px rgba(239, 68, 68, 0.25);
+    box-shadow: 0 0 24px var(--mark-color-error-glow);
   }
   .mark-input-wrapper {
     position: relative;
@@ -423,18 +423,18 @@
     background-color: var(--mark-bg);
   }
   .mark-input-error {
-    border-color: #EF4444;
+    border-color: var(--mark-color-error);
   }
   .mark-input-error:focus {
-    border-color: #EF4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+    border-color: var(--mark-color-error);
+    box-shadow: 0 0 0 3px var(--mark-color-error-subtle);
   }
   .mark-input-success {
-    border-color: #22C55E;
+    border-color: var(--mark-color-success);
   }
   .mark-input-success:focus {
-    border-color: #22C55E;
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+    border-color: var(--mark-color-success);
+    box-shadow: 0 0 0 3px var(--mark-color-success-subtle);
   }
 }
 @property --tw-translate-x {

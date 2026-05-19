@@ -27,8 +27,8 @@ export default function Select({
   placeholder = 'Select an option...',
   onChange,
   size = 'md',
-  disabled = false,
-  error = false,
+  isDisabled = false,
+  isError = false,
   className = '',
 }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -65,7 +65,7 @@ export default function Select({
   const displayText = selectedOption ? selectedOption.label : placeholder
 
   const handleToggle = () => {
-    if (disabled) return
+    if (isDisabled) return
     
     setIsOpen(!isOpen)
     setFocusedIndex(-1)
@@ -76,7 +76,7 @@ export default function Select({
   }
 
   const handleOptionSelect = (optionValue: string) => {
-    if (disabled) return
+    if (isDisabled) return
     
     const option = options.find(opt => opt.value === optionValue)
     if (option?.disabled) return
@@ -93,7 +93,7 @@ export default function Select({
   }
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (disabled) return
+    if (isDisabled) return
 
     switch (event.key) {
       case 'Enter':
@@ -141,12 +141,12 @@ export default function Select({
   let borderColor = 'var(--mark-border-strong)'
   let boxShadow = 'none'
 
-  if (focused && !error && !disabled) {
+  if (focused && !isError && !isDisabled) {
     borderColor = 'var(--mark-accent-primary)'
     boxShadow = '0 0 0 3px var(--mark-accent-subtle)'
-  } else if (error) {
-    borderColor = '#EF4444'
-    boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.12)'
+  } else if (isError) {
+    borderColor = 'var(--mark-color-error)'
+    boxShadow = '0 0 0 3px var(--mark-color-error-subtle)'
   }
 
   // Check for reduced motion preference
@@ -176,7 +176,7 @@ export default function Select({
         aria-haspopup="listbox"
         aria-controls={listboxId}
         aria-label={placeholder}
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={isDisabled ? -1 : 0}
         onKeyDown={handleKeyDown}
         onClick={handleToggle}
         onFocus={() => setFocused(true)}
@@ -187,7 +187,7 @@ export default function Select({
           justifyContent: 'space-between',
           width: '100%',
           height: s.height,
-          background: disabled ? 'var(--mark-bg)' : 'var(--mark-bg-elevated)',
+          background: isDisabled ? 'var(--mark-bg)' : 'var(--mark-bg-elevated)',
           border: `1px solid ${borderColor}`,
           borderRadius: 'var(--mark-radius-md)',
           color: selectedOption ? 'var(--mark-fg)' : 'var(--mark-fg-muted)',
@@ -195,8 +195,8 @@ export default function Select({
           fontSize: s.fontSize,
           paddingLeft: 'var(--mark-px-md)',
           paddingRight: 'var(--mark-px-md)',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          opacity: disabled ? 0.4 : 1,
+          cursor: isDisabled ? 'not-allowed' : 'pointer',
+          opacity: isDisabled ? 0.4 : 1,
           outline: 'none',
           boxShadow,
           transition: `border-color var(--mark-duration-fast) var(--mark-ease-smooth),

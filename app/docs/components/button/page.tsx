@@ -14,7 +14,7 @@ const BUTTON_PROPS = [
   { prop: "size", type: "'sm' | 'md' | 'lg'", default: "'md'", description: "Size of the button" },
   { prop: "isLoading", type: "boolean", default: "false", description: "Shows spinner, locks dimensions" },
   { prop: "isDisabled", type: "boolean", default: "false", description: "Prevents interaction" },
-  { prop: "fullWidth", type: "boolean", default: "false", description: "Stretches to container width" },
+  { prop: "isFullWidth", type: "boolean", default: "false", description: "Stretches to container width" },
   { prop: "leftIcon", type: "React.ReactNode", default: "—", description: "Icon before label" },
   { prop: "rightIcon", type: "React.ReactNode", default: "—", description: "Icon after label" },
   { prop: "onClick", type: "() => void", default: "—", description: "Click handler" },
@@ -50,7 +50,7 @@ export default function ButtonDocPage() {
   const [size, setSize] = useState<"sm" | "md" | "lg">("md");
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [fullWidth, setFullWidth] = useState(false);
+  const [isFullWidth, setIsFullWidth] = useState(false);
 
   return (
     <ComponentDocTemplate
@@ -66,7 +66,7 @@ export default function ButtonDocPage() {
           size={size}
           isLoading={isLoading}
           isDisabled={isDisabled}
-          fullWidth={fullWidth}
+          isFullWidth={isFullWidth}
         >
           Leave a mark
         </Button>
@@ -108,8 +108,8 @@ export default function ButtonDocPage() {
                 isDisabled
               </label>
               <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--mark-fg)", fontSize: 14, cursor: "pointer" }}>
-                <input type="checkbox" checked={fullWidth} onChange={(e) => setFullWidth(e.target.checked)} />
-                fullWidth
+                <input type="checkbox" checked={isFullWidth} onChange={(e) => setIsFullWidth(e.target.checked)} />
+                isFullWidth
               </label>
             </div>
           </div>

@@ -54,8 +54,8 @@ export default function InputExample() {${animHook}
       <Input
         label="Password"
         placeholder="••••••••"
-        status="error"
-        helperText="Password must be at least 8 characters"
+        isError
+        errorMessage="Password must be at least 8 characters"
         size="md"
       />
 
@@ -63,7 +63,7 @@ export default function InputExample() {${animHook}
       <Input
         label="Domain"
         placeholder="yoursite.com"
-        status="success"
+        isSuccess
         helperText="Domain is available!"
         size="md"
       />

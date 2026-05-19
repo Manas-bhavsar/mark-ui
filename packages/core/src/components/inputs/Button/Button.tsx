@@ -20,7 +20,7 @@ export default function Button({
   isDisabled = false,
   leftIcon,
   rightIcon,
-  fullWidth = false,
+  isFullWidth = false,
   onClick,
   children,
   className = '',
@@ -39,7 +39,7 @@ export default function Button({
     'mark-button',
     `mark-button-${variant}`,
     `mark-button-${size}`,
-    fullWidth ? 'w-full' : '',
+    isFullWidth ? 'w-full' : '',
     className,
   ]
     .filter(Boolean)

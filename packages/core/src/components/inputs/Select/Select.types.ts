@@ -18,9 +18,9 @@ export interface SelectProps {
   /** Component size */
   size?: 'sm' | 'md' | 'lg'
   /** Disabled state */
-  disabled?: boolean
+  isDisabled?: boolean
   /** Error state */
-  error?: boolean
+  isError?: boolean
   /** Additional CSS class */
   className?: string
 }

@@ -6,11 +6,11 @@ export interface TagProps {
   /** Tag size */
   size?: 'xs' | 'sm' | 'md'
   /** Removable with close button */
-  removable?: boolean
+  isRemovable?: boolean
   /** Remove handler */
   onRemove?: () => void
   /** Disabled state */
-  disabled?: boolean
+  isDisabled?: boolean
   /** Additional CSS class */
   className?: string
 }

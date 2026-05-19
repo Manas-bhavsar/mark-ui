@@ -40,8 +40,8 @@ export default function SelectDocPage() {
               onChange={setValue}
               placeholder="Choose a city"
               size={size}
-              disabled={isDisabled}
-              error={isError}
+              isDisabled={isDisabled}
+              isError={isError}
             />
             {showHelper && !isError && <span style={{ fontSize: 13, color: "var(--mark-fg-muted)" }}>Select your primary workplace.</span>}
             {isError && <span style={{ fontSize: 13, color: "var(--mark-error)" }}>Please select a valid location.</span>}
@@ -92,10 +92,10 @@ export default function SelectDocPage() {
           <Select options={BASIC_OPTIONS} placeholder="Choose..." />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <Select options={BASIC_OPTIONS} error placeholder="Error state" />
+          <Select options={BASIC_OPTIONS} isError placeholder="Error state" />
           <span style={{ fontSize: 13, color: "var(--mark-error)" }}>Required field</span>
         </div>
-        <Select options={BASIC_OPTIONS} disabled placeholder="Disabled" />
+        <Select options={BASIC_OPTIONS} isDisabled placeholder="Disabled" />
       </div>
 
       {/* USAGE */}
@@ -141,8 +141,8 @@ export default function SelectDocPage() {
             <tr><td><code>onChange</code></td><td><code>(value: string) =&gt; void</code></td><td>—</td><td>Change handler</td></tr>
             <tr><td><code>placeholder</code></td><td><code>string</code></td><td>—</td><td>Shown when nothing selected</td></tr>
             <tr><td><code>size</code></td><td><code>'sm' | 'md' | 'lg'</code></td><td><code>'md'</code></td><td>Select size</td></tr>
-            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Prevents interaction</td></tr>
-            <tr><td><code>error</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Error visual state</td></tr>
+            <tr><td><code>isDisabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Prevents interaction</td></tr>
+            <tr><td><code>isError</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Error visual state</td></tr>
           </tbody>
         </table>
       </div>

@@ -41,8 +41,8 @@ export default function BadgeExample() {${animHook}
       <Badge variant="accent">Accent</Badge>
 
       {/* With pulsing dot */}
-      <Badge variant="success" dot>Live</Badge>
-      <Badge variant="error" dot>Alert</Badge>
+      <Badge variant="success" showDot>Live</Badge>
+      <Badge variant="error" showDot>Alert</Badge>
 
       {/* Small size */}
       <Badge variant="accent" size="sm">v2.0</Badge>

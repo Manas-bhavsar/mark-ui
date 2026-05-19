@@ -4,7 +4,7 @@ export interface BadgeProps {
   /** Badge size */
   size?: 'sm' | 'md'
   /** Show pulsing status dot before text */
-  dot?: boolean
+  showDot?: boolean
   /** Badge content */
   children: React.ReactNode
   /** Additional CSS class */

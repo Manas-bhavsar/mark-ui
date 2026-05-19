@@ -10,7 +10,7 @@ const MAX_WIDTH_MAP = {
 
 export default function Container({
   size = 'xl',
-  centered = true,
+  isCentered = true,
   padding = true,
   children,
   className = '',
@@ -21,8 +21,8 @@ export default function Container({
       style={{
         width: '100%',
         maxWidth: MAX_WIDTH_MAP[size],
-        marginLeft: centered ? 'auto' : undefined,
-        marginRight: centered ? 'auto' : undefined,
+        marginLeft: isCentered ? 'auto' : undefined,
+        marginRight: isCentered ? 'auto' : undefined,
         paddingLeft: padding ? 'var(--mark-space-6)' : undefined,
         paddingRight: padding ? 'var(--mark-space-6)' : undefined,
       }}

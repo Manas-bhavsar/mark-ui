@@ -53,7 +53,7 @@ export default function TagExample() {
           <Tag
             key={tag}
             variant="accent"
-            removable
+            isRemovable
             onRemove={() => {${animCallback}
               setTags((prev) => prev.filter((t) => t !== tag))
             }}

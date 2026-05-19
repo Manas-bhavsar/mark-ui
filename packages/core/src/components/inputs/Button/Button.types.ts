@@ -12,7 +12,7 @@ export interface ButtonProps {
   /** Icon after label */
   rightIcon?: React.ReactNode
   /** Stretch to fill container */
-  fullWidth?: boolean
+  isFullWidth?: boolean
   /** Click handler */
   onClick?: () => void
   /** Button content */

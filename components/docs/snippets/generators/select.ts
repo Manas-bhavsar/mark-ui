@@ -54,7 +54,7 @@ export default function SelectExample() {
       <Select
         options={options}
         placeholder="Required field"
-        error
+        isError
         size="md"
       />
 
@@ -62,7 +62,7 @@ export default function SelectExample() {
       <Select
         options={options}
         placeholder="Not available"
-        disabled
+        isDisabled
         size="md"
       />
 

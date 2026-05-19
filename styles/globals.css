@@ -55,7 +55,23 @@
   --mark-shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4);
   --mark-shadow-md:     0 4px 12px rgba(0, 0, 0, 0.5);
   --mark-shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.6);
+  --mark-shadow-xl:     0 20px 60px rgba(0, 0, 0, 0.5);
   --mark-shadow-accent: 0 0 24px var(--mark-accent-glow);
+
+  /* ── Semantic Colors ── */
+  --mark-color-error:          #EF4444;
+  --mark-color-error-glow:     rgba(239, 68, 68, 0.25);
+  --mark-color-error-subtle:   rgba(239, 68, 68, 0.12);
+  --mark-color-success:        #22C55E;
+  --mark-color-success-subtle: rgba(34, 197, 94, 0.12);
+  --mark-color-warning:        #EAB308;
+  --mark-color-warning-subtle: rgba(234, 179, 8, 0.12);
+  --mark-color-info:           #3B82F6;
+  --mark-color-info-subtle:    rgba(59, 130, 246, 0.12);
+  --mark-color-online:         #10B981;
+  --mark-color-away:           #F59E0B;
+  --mark-color-busy:           #EF4444;
+  --mark-color-offline:        #6B7280;
 
   /* ── Typography — Fonts (Hand-drawn) ── */
   --mark-font-display: var(--font-display);
@@ -148,7 +164,7 @@
 
 [data-theme="arctic"] {
   --mark-accent-primary:   #2563EB;
-  --mark-accent-secondary: #1E40AF;
+  --mark-accent-secondary: #64748B;
   --mark-accent-glow:      rgba(37, 99, 235, 0.25);
   --mark-accent-subtle:    rgba(37, 99, 235, 0.08);
   --docs-bg:               #080E1A;
@@ -157,7 +173,7 @@
 
 [data-theme="obsidian"] {
   --mark-accent-primary:   #6366F1;
-  --mark-accent-secondary: #4F46E5;
+  --mark-accent-secondary: #A78BFA;
   --mark-accent-glow:      rgba(99, 102, 241, 0.25);
   --mark-accent-subtle:    rgba(99, 102, 241, 0.08);
   --docs-bg:               #0B0A14;
@@ -166,7 +182,7 @@
 
 [data-theme="ivory"] {
   --mark-accent-primary:   #D97706;
-  --mark-accent-secondary: #B45309;
+  --mark-accent-secondary: #78716C;
   --mark-accent-glow:      rgba(217, 119, 6, 0.25);
   --mark-accent-subtle:    rgba(217, 119, 6, 0.08);
   --docs-bg:               #110F0A;
@@ -184,7 +200,7 @@
 
 [data-theme="sage"] {
   --mark-accent-primary:   #4D7C6F;
-  --mark-accent-secondary: #374151;
+  --mark-accent-secondary: #F59E0B;
   --mark-accent-glow:      rgba(77, 124, 111, 0.25);
   --mark-accent-subtle:    rgba(77, 124, 111, 0.08);
   --docs-bg:               #090E0C;
@@ -213,7 +229,7 @@
 
 [data-theme="shinigami"] {
   --mark-accent-primary:   #C9A84C;
-  --mark-accent-secondary: #1F2937;
+  --mark-accent-secondary: #1A1A2E;
   --mark-accent-glow:      rgba(201, 168, 76, 0.25);
   --mark-accent-subtle:    rgba(201, 168, 76, 0.08);
   --docs-bg:               #07060F;
@@ -240,7 +256,7 @@
 
 [data-theme="matrixx"] {
   --mark-accent-primary:   #00FF41;
-  --mark-accent-secondary: #003D10;
+  --mark-accent-secondary: #003B00;
   --mark-accent-glow:      rgba(0, 255, 65, 0.25);
   --mark-accent-subtle:    rgba(0, 255, 65, 0.08);
   --docs-bg:               #010A01;
@@ -249,7 +265,7 @@
 
 [data-theme="gotham"] {
   --mark-accent-primary:   #FFD700;
-  --mark-accent-secondary: #2C2C2C;
+  --mark-accent-secondary: #1C1C1C;
   --mark-accent-glow:      rgba(255, 215, 0, 0.25);
   --mark-accent-subtle:    rgba(255, 215, 0, 0.08);
   --docs-bg:               #070707;

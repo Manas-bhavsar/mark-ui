@@ -13,28 +13,28 @@ const VARIANT_STYLES = {
     dotColor: 'var(--mark-fg)',
   },
   success: {
-    bg: 'rgba(34, 197, 94, 0.12)',
-    color: '#22C55E',
-    border: '1px solid rgba(34, 197, 94, 0.25)',
-    dotColor: '#22C55E',
+    bg: 'var(--mark-color-success-subtle)',
+    color: 'var(--mark-color-success)',
+    border: '1px solid color-mix(in srgb, var(--mark-color-success) 25%, transparent)',
+    dotColor: 'var(--mark-color-success)',
   },
   warning: {
-    bg: 'rgba(234, 179, 8, 0.12)',
-    color: '#EAB308',
-    border: '1px solid rgba(234, 179, 8, 0.25)',
-    dotColor: '#EAB308',
+    bg: 'var(--mark-color-warning-subtle)',
+    color: 'var(--mark-color-warning)',
+    border: '1px solid color-mix(in srgb, var(--mark-color-warning) 25%, transparent)',
+    dotColor: 'var(--mark-color-warning)',
   },
   error: {
-    bg: 'rgba(239, 68, 68, 0.12)',
-    color: '#EF4444',
-    border: '1px solid rgba(239, 68, 68, 0.25)',
-    dotColor: '#EF4444',
+    bg: 'var(--mark-color-error-subtle)',
+    color: 'var(--mark-color-error)',
+    border: '1px solid color-mix(in srgb, var(--mark-color-error) 25%, transparent)',
+    dotColor: 'var(--mark-color-error)',
   },
   info: {
-    bg: 'rgba(59, 130, 246, 0.12)',
-    color: '#3B82F6',
-    border: '1px solid rgba(59, 130, 246, 0.25)',
-    dotColor: '#3B82F6',
+    bg: 'var(--mark-color-info-subtle)',
+    color: 'var(--mark-color-info)',
+    border: '1px solid color-mix(in srgb, var(--mark-color-info) 25%, transparent)',
+    dotColor: 'var(--mark-color-info)',
   },
   accent: {
     bg: 'var(--mark-accent-subtle)',
@@ -60,7 +60,7 @@ const SIZE_STYLES = {
 export default function Badge({
   variant = 'default',
   size = 'md',
-  dot = false,
+  showDot = false,
   children,
   className = '',
 }: BadgeProps) {
@@ -100,7 +100,7 @@ export default function Badge({
         whiteSpace: 'nowrap',
       }}
     >
-      {dot && (
+      {showDot && (
         <motion.span
           animate={{ scale: [1, 1.4, 1] }}
           transition={{
